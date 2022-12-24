@@ -31,6 +31,24 @@ class Board
             }
         }
     }
+
+    /// <summary>
+    /// this function finds the value options for the missing cells
+    /// </summary>
+    public void FindOptions()
+    {
+        for (int i = 0; i < Constants.SIDE; i++)
+        {
+            for (int j = 0; j < Constants.SIDE; j++)
+            {
+                cells[i, j].AddValueOptions(this);
+                if (cells[i, j].ValueOptions.Count == 1)
+                {
+                    cells[i, j].Value = cells[i, j].ValueOptions.First();
+                }
+            }
+        }
+    }
     public Cell[,] Cells
     {
         get { return cells; }
