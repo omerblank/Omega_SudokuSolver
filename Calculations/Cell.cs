@@ -39,7 +39,11 @@ class Cell
     }
 
     /// <summary>
+    /// this function finds the missing values in the row
     /// </summary>
+    /// <param name="board"></param>
+    /// <returns></returns>
+    public int[] FindMissingInRow(Board board)
     {
         //counting array to check which numbers are missing
         int[] countArr = new int[Constants.SIDE];
@@ -50,12 +54,20 @@ class Cell
         //loop in O(log n) to initizalize the counting array according to the given array
         for (int i = 0; i < Constants.SIDE - i - 1; i++)
         {
+            if (board.Cells[index.Row, i].valueOptions.Count != 0)
+                countArr[board.Cells[index.Row, i].valueOptions.First() - 1]++;
+            if (board.Cells[index.Row, Constants.SIDE - i - 1].valueOptions.Count != 0)
+                countArr[board.Cells[index.Row, Constants.SIDE - i - 1].valueOptions.First() - 1]++;
         }
         return countArr;
     }
 
     /// <summary>
+    /// this function finds the missing values in the column
     /// </summary>
+    /// <param name="board"></param>
+    /// <returns></returns>
+    public int[] FindMissingInColumn(Board board)
     {
         //counting array to check which numbers are missing
         int[] countArr = new int[Constants.SIDE];
@@ -63,7 +75,13 @@ class Cell
         //initialize the counting array to 0
         Array.Clear(countArr, 0, countArr.Length);
 
+        //loop in O(log n) to initizalize the counting array according to the given array
+        for (int i = 0; i < Constants.SIDE - i - 1; i++)
         {
+            if (board.Cells[i, index.Col].valueOptions.Count != 0)
+                countArr[board.Cells[i, index.Col].valueOptions.First() - 1]++;
+            if (board.Cells[Constants.SIDE - i - 1, index.Col].valueOptions.Count != 0)
+                countArr[board.Cells[Constants.SIDE - i - 1, index.Col].valueOptions.First() - 1]++;
         }
         return countArr;
     }
