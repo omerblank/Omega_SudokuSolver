@@ -39,9 +39,7 @@ class Cell
     }
 
     /// <summary>
-    /// this function finds the missing values in the given line (row/column)
     /// </summary>
-    public int[] FindMissingInLine(Cell[] row)
     {
         //counting array to check which numbers are missing
         int[] countArr = new int[Constants.SIDE];
@@ -52,18 +50,12 @@ class Cell
         //loop in O(log n) to initizalize the counting array according to the given array
         for (int i = 0; i < Constants.SIDE - i - 1; i++)
         {
-            if (row[i].valueOptions.Count != 0)
-                countArr[row[i].valueOptions.First() - 1]++;
-            if (row[Constants.SIDE - i - 1].valueOptions.Count != 0)
-                countArr[row[Constants.SIDE - i - 1].valueOptions.First() - 1]++;
         }
         return countArr;
     }
 
     /// <summary>
-    /// this function finds the missing values in the given sub square
     /// </summary>
-    public int[] FindMissingInMat(Cell[,] subSquare)
     {
         //counting array to check which numbers are missing
         int[] countArr = new int[Constants.SIDE];
@@ -71,15 +63,44 @@ class Cell
         //initialize the counting array to 0
         Array.Clear(countArr, 0, countArr.Length);
 
-        for (int i = 0; i < Math.Sqrt(Constants.SIDE); i++)
         {
-            for (int j = 0; j < Math.Sqrt(Constants.SIDE); j++)
+        }
+        return countArr;
+    }
+
+    /// <summary>
+    /// this function finds the missing values in the sub square
+    /// </summary>
+    /// <param name="board"></param>
+    /// <returns></returns>
+    public int[] FindMissingInSubSquare(Board board)
+    {
+        //counting array to check which numbers are missing
+        int[] countArr = new int[Constants.SIDE];
+
+        //initialize the counting array to 0
+        Array.Clear(countArr, 0, countArr.Length);
+
+        for (int i = subSquareTopLeftIndex.Row; i < Math.Sqrt(Constants.SIDE); i++)
+        {
+            for (int j = subSquareTopLeftIndex.Col; j < Math.Sqrt(Constants.SIDE); j++)
             {
-                if (subSquare[i, j].valueOptions.Count != 0)
-                    countArr[subSquare[i, j].valueOptions.First() - 1]++;
+                if (board.Cells[i, j].valueOptions.Count != 0)
+                    countArr[board.Cells[i, j].valueOptions.First() - 1]++;
             }
         }
-
         return countArr;
+    }
+
+    //valueOptions property
+    public List<int> ValueOptions
+    {
+        get { return valueOptions; }
+    }
+
+    //ToString (the value of the cell)
+    public override string ToString()
+    {
+        return "" + valueOptions.First();
     }
 }
