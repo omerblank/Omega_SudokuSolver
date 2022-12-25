@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 class Cell
 {
     private Location index;
+    private Location blockTopLeftIndex;
     private int value;
     private List<int> valueOptions;
 
@@ -17,10 +18,9 @@ class Cell
     /// <param name="value"></param>
     public Cell(Location index, int value)
     {
-        int subSquareRow = -1;
-        int subSquareCol = -1;
         this.index = index;
         this.value = value;
+        this.blockTopLeftIndex = new Location(index.Row - index.Row % (int)Math.Sqrt(Constants.SIDE), index.Col - index.Col % (int)Math.Sqrt(Constants.SIDE));
         this.valueOptions = new List<int>();
     }
 
@@ -38,6 +38,7 @@ class Cell
         Array.Clear(countArr, 0, countArr.Length);
 
         //loop in O(log n) to initizalize the counting array according to the given array
+        for (int i = 0; i <= Constants.SIDE - i - 1; i++)
         {
             if (board.Cells[index.Row, i].value != 0)
                 countArr[board.Cells[index.Row, i].value - 1]++;
@@ -61,6 +62,7 @@ class Cell
         Array.Clear(countArr, 0, countArr.Length);
 
         //loop in O(log n) to initizalize the counting array according to the given array
+        for (int i = 0; i <= Constants.SIDE - i - 1; i++)
         {
             if (board.Cells[i, index.Col].value != 0)
                 countArr[board.Cells[i, index.Col].value - 1]++;
@@ -83,7 +85,9 @@ class Cell
         //initialize the counting array to 0
         Array.Clear(countArr, 0, countArr.Length);
 
+        for (int i = blockTopLeftIndex.Row; i < blockTopLeftIndex.Row + Math.Sqrt(Constants.SIDE); i++)
         {
+            for (int j = blockTopLeftIndex.Col; j < blockTopLeftIndex.Col + Math.Sqrt(Constants.SIDE); j++)
             {
                 if (board.Cells[i, j].value != 0)
                     countArr[board.Cells[i, j].value - 1]++;
@@ -97,6 +101,7 @@ class Cell
         int[] missingsInRow = FindMissingInRow(board);
         int[] missingsInCol = FindMissingInColumn(board);
         int[] missingsInSubSquare = FindMissingInSubSquare(board);
+        for (int i = 0; i < Constants.SIDE && value == 0; i++)
         {
             if (missingsInRow[i] == 0 && missingsInCol[i] == 0 && missingsInSubSquare[i] == 0)
                 valueOptions.Add(i + 1);
@@ -114,7 +119,7 @@ class Cell
     public List<int> ValueOptions
     {
         get { return valueOptions; }
-        set { valueOptions = value; }   
+        set { valueOptions = value; }
     }
 
     //ToString (the value of the cell)
