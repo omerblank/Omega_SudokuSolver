@@ -12,7 +12,10 @@ class Output
         sudokuBoard = new Board(input);
     }
 
-    public void PreCalculation()
+    /// <summary>
+    /// this function prints the board
+    /// </summary>
+    public void PrintBoard()
     {
         for (int i = 0; i < Constants.SIDE; i++)
         {
@@ -33,5 +36,16 @@ class Output
             }
             Console.WriteLine();
         }
+    }
+
+    /// <summary>
+    /// this function prints the solved sudoku board and returns the solve as a string
+    /// </summary>
+    /// <returns>the solve as a string
+    /// </returns>
+    public string Solve()
+    {
+        //TODO: write the function 
+        return "";
     }
 }
