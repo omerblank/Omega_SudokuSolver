@@ -13,7 +13,7 @@ class Board
     private Cell[,] cells;
 
     /// <summary>
-    /// this function initializes the calculations board.
+    /// this function creates a new Board
     /// </summary>
     /// <param name="input"></param>
     public Board(string input)
@@ -48,6 +48,34 @@ class Board
                 }
             }
         }
+    }
+
+    public bool SolveBoard(int row, int col)
+    {
+        if (row == Constants.SIDE - 1 && col == Constants.SIDE)
+            return true;
+
+        if (col == Constants.SIDE)
+        {
+            row++;
+            col = 0;
+        }
+
+        if (cells[row, col].Value != 0)
+            return SolveBoard(row, col + 1);
+
+        foreach (int value in Constants.VALID_CELL_VALUES)
+        {
+            if (Validations.IsAssignable(this, cells[row, col], value))
+            {
+                cells[row, col].Value = value;
+
+                if (SolveBoard(row, col + 1))
+                    return true;
+            }
+            cells[row, col].Value = 0;
+        }
+        return false;
     }
     public Cell[,] Cells
     {
