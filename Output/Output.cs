@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 class Output
 {
     private Board sudokuBoard;
+
+    /// <summary>
+    /// this function creates a new Output object
+    /// </summary>
+    /// <param name="input"></param>
     public Output(string input)
     {
         sudokuBoard = new Board(input);
@@ -39,13 +44,30 @@ class Output
     }
 
     /// <summary>
+    /// this function converts a board to a string
+    /// </summary>
+    /// <param name="board"></param>
+    /// <returns>the board as a string</returns>
+    public string BoardToString(Board board)
+    {
+        string boardElements = "";
+        foreach (Cell cell in board.Cells)
+        {
+            boardElements += cell.Value;
+        }
+        return boardElements;
+    }
+
+    /// <summary>
     /// this function prints the solved sudoku board and returns the solve as a string
     /// </summary>
     /// <returns>the solve as a string
     /// </returns>
     public string Solve()
     {
-        //TODO: write the function 
-        return "";
+        sudokuBoard.FindOptions();
+        sudokuBoard.SolveBoard(0, 0);
+        PrintBoard();
+        return BoardToString(sudokuBoard);
     }
 }

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 class Cell
 {
     private Location index;
-    private Location blockTopLeftIndex;
+    private Location blockIndex;
     private int value;
     private List<int> valueOptions;
 
     /// <summary>
-    /// this function initializes a Cell Object
+    /// this function creates a new Cell
     /// </summary>
     /// <param name="index"></param>
     /// <param name="value"></param>
@@ -20,7 +20,7 @@ class Cell
     {
         this.index = index;
         this.value = value;
-        this.blockTopLeftIndex = new Location(index.Row - index.Row % (int)Math.Sqrt(Constants.SIDE), index.Col - index.Col % (int)Math.Sqrt(Constants.SIDE));
+        this.blockIndex = new Location(index.Row - index.Row % (int)Math.Sqrt(Constants.SIDE), index.Col - index.Col % (int)Math.Sqrt(Constants.SIDE));
         this.valueOptions = new List<int>();
     }
 
@@ -85,9 +85,9 @@ class Cell
         //initialize the counting array to 0
         Array.Clear(countArr, 0, countArr.Length);
 
-        for (int i = blockTopLeftIndex.Row; i < blockTopLeftIndex.Row + Math.Sqrt(Constants.SIDE); i++)
+        for (int i = blockIndex.Row; i < blockIndex.Row + Math.Sqrt(Constants.SIDE); i++)
         {
-            for (int j = blockTopLeftIndex.Col; j < blockTopLeftIndex.Col + Math.Sqrt(Constants.SIDE); j++)
+            for (int j = blockIndex.Col; j < blockIndex.Col + Math.Sqrt(Constants.SIDE); j++)
             {
                 if (board.Cells[i, j].value != 0)
                     countArr[board.Cells[i, j].value - 1]++;
@@ -106,6 +106,20 @@ class Cell
             if (missingsInRow[i] == 0 && missingsInCol[i] == 0 && missingsInSubSquare[i] == 0)
                 valueOptions.Add(i + 1);
         }
+    }
+
+    //index property
+    public Location Index
+    {
+        get { return index; }
+        set { index = value; }
+    }
+
+    //blockIndex property
+    public Location BlockIndex
+    {
+        get { return blockIndex; }
+        set { blockIndex = value; }
     }
 
     //value property
