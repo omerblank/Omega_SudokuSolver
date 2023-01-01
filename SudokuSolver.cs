@@ -8,7 +8,7 @@
         check.PrintBoard();
         check.Solve();
         watch.Stop();
-        //right now the execution time is around 30 ms!
+        //right now the best execution time is 20 ms!
         Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
     }
 }

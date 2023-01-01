@@ -67,7 +67,6 @@ class Output
     {
         sudokuBoard.FindOptions();
         sudokuBoard.SolveBoard(0, 0);
-        PrintBoard();
         return BoardToString(sudokuBoard);
     }
 }

@@ -64,7 +64,7 @@ class Board
         if (cells[row, col].Value != 0)
             return SolveBoard(row, col + 1);
 
-        foreach (int value in Constants.VALID_CELL_VALUES)
+        foreach (int value in cells[row, col].ValueOptions)
         {
             if (Validations.IsAssignable(this, cells[row, col], value))
             {
