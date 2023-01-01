@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 /// </summary>
 class Board
 {
+    private Validations validator;
     private Cell[,] cells;
-
+    private int side;
     /// <summary>
     /// this function creates a new Board
     /// </summary>
@@ -19,15 +20,17 @@ class Board
     public Board(string input)
     {
         //checking that the input is valid before starting
-        Validations.PreCalculating(input);
+        validator = new Validations(input);
+        validator.PreCalculating(input);
         //initialize the board
-        this.cells = new Cell[Constants.SIDE, Constants.SIDE];
-        for (int i = 0; i < Constants.SIDE; i++)
+        side = (int)validator.Side;
+        cells = new Cell[side, side];
+        for (int i = 0; i < side; i++)
         {
-            for (int j = 0; j < Constants.SIDE; j++)
+            for (int j = 0; j < side; j++)
             {
                 //initializing the cells
-                this.cells[i, j] = new Cell(new Location(i, j), input[i * Constants.SIDE + j] - '0');
+                cells[i, j] = new Cell(new Location(i, j), input[i * side + j] - '0');
             }
         }
     }
@@ -37,9 +40,9 @@ class Board
     /// </summary>
     public void FindOptions()
     {
-        for (int i = 0; i < Constants.SIDE; i++)
+        for (int i = 0; i < side; i++)
         {
-            for (int j = 0; j < Constants.SIDE; j++)
+            for (int j = 0; j < side; j++)
             {
                 cells[i, j].AddValueOptions(this);
                 if (cells[i, j].ValueOptions.Count == 1)
@@ -52,10 +55,10 @@ class Board
 
     public bool SolveBoard(int row, int col)
     {
-        if (row == Constants.SIDE - 1 && col == Constants.SIDE)
+        if (row == side - 1 && col == side)
             return true;
 
-        if (col == Constants.SIDE)
+        if (col == side)
         {
             row++;
             col = 0;
@@ -66,7 +69,7 @@ class Board
 
         foreach (int value in cells[row, col].ValueOptions)
         {
-            if (Validations.IsAssignable(this, cells[row, col], value))
+            if (validator.IsAssignable(this, cells[row, col], value))
             {
                 cells[row, col].Value = value;
 

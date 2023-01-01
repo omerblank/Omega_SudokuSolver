@@ -9,23 +9,55 @@ using System.Threading.Tasks;
 /// </summary>
 class Validations
 {
+    private string input;
+    private double side;
+    public Validations(string input)
+    {
+        this.input = input;
+        this.side = Math.Sqrt(input.Length);
+    }
+
+    private void ValidateInputLength()
+    {
+        for (int i = Constants.MIN_SIZE; i <= Constants.MAX_SIZE; i++)
+        {
+            if (side == Math.Pow(i, 2))
+                return;
+        }
+        throw new InputLengthException("The input length is illegal!");
+    }
+
+    public HashSet<int> GetValidValues()
+    {
+        HashSet<int> validValues = new HashSet<int>();
+        for (int i = 0; i < side; i++)
+        {
+            validValues.Add(i);
+        }
+        return validValues;
+    }
+
+    private void ValidateElementsValues()
+    {
+        HashSet<int> validValues = GetValidValues();
+        foreach (char element in input)
+        {
+            if (!validValues.Contains(element - '0'))
+                throw new ArgumentException(element + " is not a valid value in Omega Sudoku Board!");
+        }
+    }
     /// <summary>
     /// this function scans the given input and checks if it is valid before we are doing any calculations.
     /// </summary>
     /// <param name="input"></param>
     /// <exception cref="InputLengthException"></exception>
     /// <exception cref="ArgumentException"></exception>
-    public static void PreCalculating(string input)
+    public void PreCalculating(string input)
     {
         //check if the input length is valid
-        if (Math.Sqrt(input.Length) != Constants.SIDE)
-            throw new InputLengthException("The input length does not fit the board");
+        ValidateInputLength();
         // check if all the elements in the input are valid
-        foreach (char c in input)
-        {
-            if (c - '0' != 0 && !Constants.VALID_CELL_VALUES.Contains(c - '0'))
-                throw new ArgumentException(c + " is not a valid value in Omega Sudoku Board!");
-        }
+        ValidateElementsValues();
     }
 
     /// <summary>
@@ -35,9 +67,9 @@ class Validations
     /// <param name="row"></param>
     /// <param name="num"></param>
     /// <returns>true if the value can be assigned, false if not</returns>
-    public static bool AssignableInRow(Board board, int row, int num)
+    public bool AssignableInRow(Board board, int row, int num)
     {
-        for (int i = 0; i < Constants.SIDE; i++)
+        for (int i = 0; i < side; i++)
         {
             if (board.Cells[row, i].Value == num)
                 return false;
@@ -52,9 +84,9 @@ class Validations
     /// <param name="col"></param>
     /// <param name="num"></param>
     /// <returns>true if the value can be assigned, false if not</returns>
-    public static bool AssignableInColumn(Board board, int col, int num)
+    public bool AssignableInColumn(Board board, int col, int num)
     {
-        for (int i = 0; i < Constants.SIDE; i++)
+        for (int i = 0; i < side; i++)
         {
             if (board.Cells[i, col].Value == num)
                 return false;
@@ -70,11 +102,11 @@ class Validations
     /// <param name="col"></param>
     /// <param name="num"></param>
     /// <returns>true if the value can be assigned, false if not</returns>
-    public static bool AssignableInBlock(Board board, int row, int col, int num)
+    public bool AssignableInBlock(Board board, int row, int col, int num)
     {
-        for (int i = row; i < row + Math.Sqrt(Constants.SIDE); i++)
+        for (int i = row; i < row + Math.Sqrt(side); i++)
         {
-            for (int j = col; j < col + Math.Sqrt(Constants.SIDE); j++)
+            for (int j = col; j < col + Math.Sqrt(side); j++)
             {
                 if (board.Cells[i, j].Value == num)
                     return false;
@@ -90,10 +122,16 @@ class Validations
     /// <param name="cell"></param>
     /// <param name="num"></param>
     /// <returns>true if the value can be assigned, false if not</returns>
-    public static bool IsAssignable(Board board, Cell cell, int num)
+    public bool IsAssignable(Board board, Cell cell, int num)
     {
         if (AssignableInRow(board, cell.Index.Row, num) && AssignableInColumn(board, cell.Index.Col, num) && AssignableInBlock(board, cell.BlockIndex.Row, cell.BlockIndex.Col, num))
             return true;
         return false;
+    }
+
+    public double Side
+    {
+        get { return side; }
+        set { this.side = value; }
     }
 }
