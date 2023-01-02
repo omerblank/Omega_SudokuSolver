@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-static class Solving
+static class Solution
 {
     /// <summary>
     /// this function prints the board
@@ -61,5 +61,23 @@ static class Solving
         Console.WriteLine("After solving: ");
         PrintBoard(board);
         return BoardToString(board);
+    }
+
+
+    public static void SolverRunning()
+    {
+        var watch = new System.Diagnostics.Stopwatch();
+        watch.Start();
+        Solve(new Board(Messages.ChooseMode()));
+        watch.Stop();
+        Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");// right now the best execution time is 20 ms!
+        Messages.MakeAChoice("c", "continue", SolverRunning);
+    }
+
+    public static void SudokuMain()
+    {
+        Messages.WelcomeMessasge();
+        SolverRunning();
+        Messages.GoodbyeMessage();
     }
 }

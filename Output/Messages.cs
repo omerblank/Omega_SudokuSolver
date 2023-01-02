@@ -32,8 +32,7 @@ static class Messages
                 return TextFileInput();
 
             case "end":
-                Console.WriteLine("Ω SEE YOU SOON! Ω");
-                Environment.Exit(0);
+                { }
                 break;
         }
         return "";
@@ -44,6 +43,7 @@ static class Messages
         string stringInput;
         Console.WriteLine("Enter the string: ");
         stringInput = Console.ReadLine();
+        Console.WriteLine();
         return stringInput;
     }
 
@@ -52,8 +52,29 @@ static class Messages
         string textFileInput;
         Console.WriteLine("Enter the text file path: ");
         textFileInput = Console.ReadLine();
-        textFileInput = File.ReadAllText(textFileInput);
-        return textFileInput;
+        try
+        {
+            textFileInput = File.ReadAllText(textFileInput);
+            Console.WriteLine();
+            return textFileInput;
+        }
+        catch (FileNotFoundException)
+        {
+            Console.WriteLine("the file was not found");
+        }
+        catch (DirectoryNotFoundException)
+        {
+            Console.WriteLine("the directory was not found");
+        }
+        catch (UnauthorizedAccessException)
+        {
+            Console.WriteLine("no permission to access the file");
+        }
+        catch (IOException)
+        {
+            Console.WriteLine("an I/O error occurred while reading the file");
+        }
+        return "";
     }
 
     public static void MakeAChoice(string validChoice, string doWhat, Action operation)
@@ -81,5 +102,10 @@ static class Messages
         Console.WriteLine($"Ω Hi user, welcome to Omega Sudoku Solver! Ω\n" +
             $"Here you can insert an unsolved sudoku board as a string or as a text file, I will solve it and show you the solution\n");
         MakeAChoice("rules", "see sudoku rules", ShowRules);
+    }
+
+    public static void GoodbyeMessage()
+    {
+        Console.WriteLine("Ω SEE YOU SOON! Ω");
     }
 }
