@@ -67,7 +67,7 @@ class Board
 
         foreach (int value in cells[row, col].ValueOptions)
         {
-            if (InputValidations.IsAssignable(this, cells[row, col], value))
+            if (BoardValidations.IsAssignable(this, cells[row, col], value))
             {
                 cells[row, col].Value = value;
 

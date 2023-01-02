@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-/// <summary>
-/// class for validations on the input
-/// </summary>
+// class for validations on the input
 static class InputValidations
 {
     public static void ValidateInputLength(string input)
