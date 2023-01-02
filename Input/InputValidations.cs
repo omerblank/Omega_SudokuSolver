@@ -20,7 +20,7 @@ static class InputValidations
     public static HashSet<int> GetValidValues(string input)
     {
         HashSet<int> validValues = new HashSet<int>();
-        for (int i = 0; i < Math.Sqrt(input.Length); i++)
+        for (int i = 0; i <= Math.Sqrt(input.Length); i++)
         {
             validValues.Add(i);
         }
