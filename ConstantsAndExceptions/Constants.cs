@@ -8,4 +8,5 @@ static class Constants
 {
     public const int MIN_SIZE = 2;//--> 2^2=4 --> 4*4
     public const int MAX_SIZE = 5;//--> 5^2=25 --> 25*25
+    public static readonly List<string> INPUT_OPTIONS = new List<string>() { "string", "text file" };
 }

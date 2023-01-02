@@ -6,6 +6,46 @@ using System.Threading.Tasks;
 
 static class Messages
 {
+    public static string ChooseMode()
+    {
+        string mode;
+        Console.WriteLine($"Choose the way you want to give the input: ");
+        Constants.INPUT_OPTIONS.ForEach(Console.WriteLine);
+        mode = Console.ReadLine();
+        while(!Constants.INPUT_OPTIONS.Contains(mode.ToLower()))
+        {
+            Console.WriteLine($"Invalid input!\nchoose the way you want to give the input: ");
+            Constants.INPUT_OPTIONS.ForEach(Console.WriteLine);
+            mode = Console.ReadLine();
+        }
+        switch(mode.ToLower())
+        {
+            case "string":
+                return StringInput();
+
+            case "text file":
+                return TextFileInput();
+        }
+        return "";
+    }
+
+    public static string StringInput()
+    {
+        string stringInput;
+        Console.WriteLine("Enter the string: ");
+        stringInput = Console.ReadLine();
+        return stringInput;
+    }
+
+    public static string TextFileInput()
+    {
+        string textFileInput;
+        Console.WriteLine("Enter the text file path: ");
+        textFileInput = Console.ReadLine();
+        textFileInput = File.ReadAllText(textFileInput);
+        return textFileInput;
+    }
+
     public static void MakeAChoice(string validChoice, string doWhat, Action operation)
     {
         string choice;
