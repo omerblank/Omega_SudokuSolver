@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 /// </summary>
 class Board
 {
-    private Validations validator;
     private Cell[,] cells;
     private int side;
     /// <summary>
@@ -20,17 +19,16 @@ class Board
     public Board(string input)
     {
         //checking that the input is valid before starting
-        validator = new Validations(input);
-        validator.PreCalculating(input);
+        Validations.PreCalculating(input);
         //initialize the board
-        side = (int)validator.Side;
+        side = (int)Math.Sqrt(input.Length);
         cells = new Cell[side, side];
         for (int i = 0; i < side; i++)
         {
             for (int j = 0; j < side; j++)
             {
                 //initializing the cells
-                cells[i, j] = new Cell(new Location(i, j), input[i * side + j] - '0');
+                cells[i, j] = new Cell(new Location(i, j), input[i * side + j] - '0', side);
             }
         }
     }
@@ -69,7 +67,7 @@ class Board
 
         foreach (int value in cells[row, col].ValueOptions)
         {
-            if (validator.IsAssignable(this, cells[row, col], value))
+            if (Validations.IsAssignable(this, cells[row, col], value))
             {
                 cells[row, col].Value = value;
 
@@ -84,5 +82,11 @@ class Board
     {
         get { return cells; }
         set { cells = value; }
+    }
+
+    public int Side
+    {
+        get { return side; }
+        set { side = value; }
     }
 }
