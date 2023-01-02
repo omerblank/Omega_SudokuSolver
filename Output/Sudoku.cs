@@ -4,11 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-class Sudoku
+static class Sudoku
 {
-    public void SolveSudoku()
+    public static void SolveSudoku()
     {
-        Console.WriteLine("Hi user, enter the board as a string: ");
-        
+        var watch = new System.Diagnostics.Stopwatch();
+        watch.Start();
+        Messages.WelcomeMessasge();
+        Solving.Solve(new Board(Messages.ChooseMode()));
+        watch.Stop();
+        //right now the best execution time is 20 ms!
+        Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
     }
 }

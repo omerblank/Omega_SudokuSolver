@@ -54,8 +54,12 @@ static class Solving
     /// </returns>
     public static string Solve(Board board)
     {
+        Console.WriteLine("Before solving: ");
+        PrintBoard(board);
         board.FindOptions();
         board.SolveBoard(0, 0);
+        Console.WriteLine("After solving: ");
+        PrintBoard(board);
         return BoardToString(board);
     }
 }

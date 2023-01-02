@@ -9,22 +9,32 @@ static class Messages
     public static string ChooseMode()
     {
         string mode;
-        Console.WriteLine($"Choose the way you want to give the input: ");
+        Console.WriteLine($"Choose the way you want to give the input from the following options or type 'end' to end: ");
         Constants.INPUT_OPTIONS.ForEach(Console.WriteLine);
         mode = Console.ReadLine();
-        while(!Constants.INPUT_OPTIONS.Contains(mode.ToLower()))
+        while (!Constants.INPUT_OPTIONS.Contains(mode.ToLower()) && mode.ToLower() != "end")
         {
-            Console.WriteLine($"Invalid input!\nchoose the way you want to give the input: ");
+            Console.WriteLine($"Invalid input!\nchoose the way you want to give the input from the following options or type 'end' to end: ");
             Constants.INPUT_OPTIONS.ForEach(Console.WriteLine);
             mode = Console.ReadLine();
         }
-        switch(mode.ToLower())
+        return OperateMode(mode);
+    }
+
+    public static string OperateMode(string mode)
+    {
+        switch (mode.ToLower())
         {
             case "string":
                 return StringInput();
 
             case "text file":
                 return TextFileInput();
+
+            case "end":
+                Console.WriteLine("Ω SEE YOU SOON! Ω");
+                Environment.Exit(0);
+                break;
         }
         return "";
     }
