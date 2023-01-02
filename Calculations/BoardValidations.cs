@@ -1,55 +1,67 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-/// <summary>
-/// class for validations on the input
-/// </summary>
-class Validations
+static class BoardValidations
 {
-    public static void ValidateInputLength(string input)
+    public static void ValidateDuplicatesInRows(Board board)
     {
-        for (int i = Constants.MIN_SIZE; i <= Constants.MAX_SIZE; i++)
+        int rowElement;
+        for (int i = 0; i < board.Side; i++)
         {
-            if (Math.Sqrt(input.Length) == Math.Pow(i, 2))
-                return;
+            for (int j = 0; j < board.Side; j++)
+            {
+                rowElement = board.Cells[i, j].Value;
+                for (int k = 0; k < board.Side; k++)
+                {
+                    if (k != j && board.Cells[i, k].Value == rowElement)
+                        throw new DuplicateElementsException($"An element can't appear more than once in a row!\n(element: {rowElement} in row: {i}");
+                }
+            }
         }
-        throw new InputLengthException("The input length is illegal!");
     }
 
-    public static HashSet<int> GetValidValues(string input)
+    public static void ValidateDuplicatesInColumns(Board board)
     {
-        HashSet<int> validValues = new HashSet<int>();
-        for (int i = 0; i < Math.Sqrt(input.Length); i++)
+        int colElement;
+        for (int i = 0; i < board.Side; i++)
         {
-            validValues.Add(i);
+            for (int j = 0; j < board.Side; j++)
+            {
+                colElement = board.Cells[j, i].Value;
+                for (int k = 0; k < board.Side; k++)
+                {
+                    if (k != j && board.Cells[k, i].Value == colElement)
+                        throw new DuplicateElementsException($"An element can't appear more than once in a column!\n(element: {colElement} in column: {i}");
+                }
+            }
         }
-        return validValues;
     }
 
-    public static void ValidateElementsValues(string input)
+    public static void ValidateDuplicatesInBlocks(Board board)
     {
-        HashSet<int> validValues = GetValidValues(input);
-        foreach (char element in input)
+        Location blockIndex = new Location(0, 0);
+        int blockElement;
+        for (int i = 0; i < board.Side; i++)
         {
-            if (!validValues.Contains(element - '0'))
-                throw new ArgumentException(element + " is not a valid value in Omega Sudoku Board!");
+            blockIndex.Row = i / 3 % 3;
+            blockIndex.Col = i % 3;
+            for (int j = blockIndex.Row; j < blockIndex.Row + Math.Sqrt(board.Side); j++)
+            {
+                for (int k = blockIndex.Col; k < blockIndex.Col + Math.Sqrt(board.Side); k++)
+                {
+                    blockElement = board.Cells[j, k].Value;
+                    for (int n = blockIndex.Col; n < blockIndex.Col + Math.Sqrt(board.Side); n++)
+                    {
+                        if(board.Cells[j, n].Value == blockElement)
+                            throw new DuplicateElementsException($"An element can't appear more than once in a block!\n(element: {blockElement} in block: {i}");
+                    }
+                }
+            }
         }
-    }
-    /// <summary>
-    /// this function scans the given input and checks if it is valid before we are doing any calculations.
-    /// </summary>
-    /// <param name="input"></param>
-    /// <exception cref="InputLengthException"></exception>
-    /// <exception cref="ArgumentException"></exception>
-    public static void PreCalculating(string input)
-    {
-        //check if the input length is valid
-        ValidateInputLength(input);
-        // check if all the elements in the input are valid
-        ValidateElementsValues(input);
     }
 
     /// <summary>

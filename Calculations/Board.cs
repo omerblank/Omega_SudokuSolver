@@ -19,7 +19,7 @@ class Board
     public Board(string input)
     {
         //checking that the input is valid before starting
-        Validations.PreCalculating(input);
+        InputValidations.PreCalculating(input);
         //initialize the board
         side = (int)Math.Sqrt(input.Length);
         cells = new Cell[side, side];
@@ -67,7 +67,7 @@ class Board
 
         foreach (int value in cells[row, col].ValueOptions)
         {
-            if (Validations.IsAssignable(this, cells[row, col], value))
+            if (InputValidations.IsAssignable(this, cells[row, col], value))
             {
                 cells[row, col].Value = value;
 
