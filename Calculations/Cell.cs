@@ -9,7 +9,7 @@ class Cell
     private Location index;
     private Location blockIndex;
     private int value;
-    private List<int> valueOptions;
+    private List<int> candidates; // value options
 
     /// <summary>
     /// this function creates a new Cell
@@ -21,7 +21,7 @@ class Cell
         this.index = index;
         this.value = value;
         this.blockIndex = new Location(index.Row - index.Row % (int)Math.Sqrt(side), index.Col - index.Col % (int)Math.Sqrt(side));
-        this.valueOptions = new List<int>();
+        this.candidates = new List<int>();
     }
 
     /// <summary>
@@ -100,7 +100,7 @@ class Cell
     /// the function adds the value options for each cell in the board
     /// </summary>
     /// <param name="board">the board</param>
-    public void AddValueOptions(Board board)
+    public void AddCandidates(Board board)
     {
         int[] missingsInRow = FindMissingInRow(board);
         int[] missingsInCol = FindMissingInColumn(board);
@@ -108,7 +108,7 @@ class Cell
         for (int i = 0; i < board.Side && value == 0; i++)
         {
             if (missingsInRow[i] == 0 && missingsInCol[i] == 0 && missingsInSubSquare[i] == 0)
-                valueOptions.Add(i + 1);
+                candidates.Add(i + 1);
         }
     }
 
@@ -136,8 +136,8 @@ class Cell
     //valueOptions property
     public List<int> ValueOptions
     {
-        get { return valueOptions; }
-        set { valueOptions = value; }
+        get { return candidates; }
+        set { candidates = value; }
     }
 
     //ToString (the value of the cell)

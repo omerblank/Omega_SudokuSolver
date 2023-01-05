@@ -42,7 +42,7 @@ class Board
         {
             for (int j = 0; j < side; j++)
             {
-                cells[i, j].AddValueOptions(this);
+                cells[i, j].AddCandidates(this);
                 if (cells[i, j].ValueOptions.Count == 1)
                 {
                     cells[i, j].Value = cells[i, j].ValueOptions.First();
