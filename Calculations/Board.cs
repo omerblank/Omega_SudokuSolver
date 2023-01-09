@@ -12,6 +12,8 @@ class Board
 {
     private Cell[,] cells;
     private int side;
+    private int minValue;
+    private int maxValue;
     /// <summary>
     /// this function creates a new Board
     /// </summary>
@@ -22,6 +24,8 @@ class Board
         InputValidations.PreCalculating(input);
         //initialize the board
         side = (int)Math.Sqrt(input.Length);
+        minValue = 1;
+        maxValue = side;
         cells = new Cell[side, side];
         for (int i = 0; i < side; i++)
         {
@@ -88,5 +92,17 @@ class Board
     {
         get { return side; }
         set { side = value; }
+    }
+
+    public int MinValue
+    {
+        get { return minValue; }
+        set { minValue = value; }
+    }
+
+    public int MaxValue
+    {
+        get { return maxValue; }
+        set { maxValue = value; }
     }
 }

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 class ColumnNode : DataNode
 {
     private int size;
-    private char name;
-    public ColumnNode(char name) : base()
+    private string name;
+    public ColumnNode(string name) : base()
     {
-        this.size = 0;
+        size = 0;
         this.name = name;
-        base.Column = this;
+        Column = this;
     }
     public void cover()
     {
@@ -43,7 +43,7 @@ class ColumnNode : DataNode
         get { return size; }
         set { size = value; }
     }
-    public char Name
+    public string Name
     {
         get { return name; }
         set { name = value; }

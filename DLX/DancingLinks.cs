@@ -10,7 +10,7 @@ class DancingLinks
     private ColumnNode header;
     private List<DataNode> answer;
 
-    public DancingLinks(Board board)
+    public DancingLinks(CoverBoard coverMatrix)
     {
         header = makeDLXBoard(board);
     }
@@ -38,23 +38,23 @@ class DancingLinks
         }
     }
 
-    private ColumnNode makeDLXBoard(Board board)
+    private ColumnNode makeDLXBoard(CoverBoard coverBoard)
     {
-        ColumnNode headerNode = new ColumnNode('H');
+        ColumnNode headerNode = new ColumnNode("HEADER");
         ArrayList columnNodes = new ArrayList();
-        for (int i = 0; i < board.Side; i++)
+        for (int i = 0; i < coverBoard.CoverMat.GetLength(1); i++)
         {
-            ColumnNode n = new ColumnNode((char)i);
+            ColumnNode n = new ColumnNode(i.ToString());
             columnNodes.Add(n);
             headerNode = (ColumnNode)headerNode.RightConnection(n);
         }
         headerNode = headerNode.Right.Column;
-        for (int i = 0; i < board.Side; i++)
+        for (int i = 0; i < coverBoard.CoverMat.GetLength(0); i++)
         {
             DataNode prev = null;
-            for (int j = 0; j < board.Side; j++)
+            for (int j = 0; j < coverBoard.CoverMat.GetLength(1); j++)
             {
-                if (board.Cells[i, j].Value == 1)
+                if (coverBoard.CoverMat[i,j] == CoverBoard.ON)
                 {
                     ColumnNode col = (ColumnNode)columnNodes[j];
                     DataNode newNode = new DataNode(col);
@@ -66,7 +66,7 @@ class DancingLinks
                 }
             }
         }
-        headerNode.Size = board.Side;
+        headerNode.Size = coverBoard.Side;
         return headerNode;
     }
 }

@@ -20,8 +20,8 @@ class Cell
     {
         this.index = index;
         this.value = value;
-        this.blockIndex = new Location(index.Row - index.Row % (int)Math.Sqrt(side), index.Col - index.Col % (int)Math.Sqrt(side));
-        this.candidates = new List<int>();
+        blockIndex = new Location(index.Row - index.Row % (int)Math.Sqrt(side), index.Col - index.Col % (int)Math.Sqrt(side));
+        candidates = new List<int>();
     }
 
     /// <summary>

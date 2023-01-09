@@ -32,10 +32,10 @@ class DataNode
     /// <returns> the connected node </returns>
     public DataNode DownConnection(DataNode node)
     {
-        node.down = this.down;
+        node.down = down;
         node.down.up = node;
         node.up = this;
-        this.down = node;
+        down = node;
         return node;
     }
 
