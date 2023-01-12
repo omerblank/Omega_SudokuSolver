@@ -14,7 +14,7 @@ class ColumnNode : DataNode
         this.name = name;
         Column = this;
     }
-    public void cover()
+    public void Cover()
     {
         HorizontalDisconnection();
         for (DataNode i = Down; i != this; i = i.Down)
@@ -26,7 +26,7 @@ class ColumnNode : DataNode
             }
         }
     }
-    public void uncover()
+    public void Uncover()
     {
         for (DataNode i = Up; i != this; i = i.Up)
         {

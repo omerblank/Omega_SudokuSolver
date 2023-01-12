@@ -30,7 +30,7 @@ class DataNode
     /// </summary>
     /// <param name="node"> the node to connect </param>
     /// <returns> the connected node </returns>
-    public DataNode DownConnection(DataNode node)
+    public DataNode ConnectDown(DataNode node)
     {
         node.down = down;
         node.down.up = node;
@@ -44,7 +44,7 @@ class DataNode
     /// </summary>
     /// <param name="node"> the node to connect </param>
     /// <returns> the connected node </returns>
-    public DataNode RightConnection(DataNode node)
+    public DataNode ConnectRight(DataNode node)
     {
         node.right = right;
         node.right.left = node;

@@ -19,9 +19,9 @@ class CoverBoard
     {
         for (int row = 0; row < coverMat.GetLength(0); row++)
         {
-            for (int col = 0; col < Math.Pow(side, side); col++)
+            for (int col = 0; col < Math.Pow(side, 2); col++)
             {
-                if (row / side % side == col)
+                if (row / side == col)
                 {
                     coverMat[row, col] = ON;
                     break;
@@ -38,9 +38,9 @@ class CoverBoard
     {
         for (int row = 0; row < coverMat.GetLength(0); row++)
         {
-            for (int col = (int)Math.Pow(side, side); col < 2 * Math.Pow(side, side); col++)
+            for (int col = (int)Math.Pow(side, 2); col < 2 * (int)Math.Pow(side, 2); col++)
             {
-                if (row % side == col % side)
+                if (row % (int)Math.Pow(side, 2) == col % (int)Math.Pow(side, 2))
                 {
                     coverMat[row, col] = ON;
                     break;
@@ -57,9 +57,10 @@ class CoverBoard
     {
         for (int row = 0; row < coverMat.GetLength(0); row++)
         {
-            for (int col = (int)(2 * Math.Pow(side, side)); col < 3 * Math.Pow(side, side); col++)
+            for (int col = (int)(2 * Math.Pow(side, 2)); col < 3 * Math.Pow(side, 2); col++)
             {
-                if (row == col % Math.Pow(side, side))
+                int x = row % side + (row / (int)Math.Pow(side, 2)) * side;
+                if (row % side + (row / (int)Math.Pow(side, 2)) * side == col % (int)Math.Pow(side, 2))
                 {
                     coverMat[row, col] = ON;
                     break;
@@ -74,32 +75,23 @@ class CoverBoard
     /// <param name="side"> the grid's side size </param>
     public void InitializeBoxConstraint(int side)
     {
-        for (int box = 0; box < side; box++)
+        Location boxIndex;
+        int boxNumber, cellRow, cellCol;
+        for (int row = 0; row < coverMat.GetLength(0); row++)
         {
-            for (int row = 0; row < coverMat.GetLength(0); row++)
+            for (int col = (int)(3 * Math.Pow(side, 2)); col < 4 * Math.Pow(side, 2); col++)
             {
-                for (int col = (int)(3 * Math.Pow(side, side)); col < 4 * Math.Pow(side, side); col++)
+                cellRow = row / (int)Math.Pow(side, 2);
+                cellCol = row % (int)Math.Pow(side, 2) / side;
+                boxIndex = new Location(cellRow - cellRow % (int)Math.Sqrt(side), cellCol - cellCol % (int)Math.Sqrt(side));
+                boxNumber = boxIndex.Row + boxIndex.Col / (int)Math.Sqrt(side);
+                if (col % Math.Pow(side, 2) == row % Math.Pow(side, 2))
                 {
-                    if (row - row % (int)Math.Sqrt(side) == box && col - col % (int)Math.Sqrt(side) == box)
-                    {
-                        if (row % side == col % side)
-                        {
-                            coverMat[row, col] = ON;
-                            break;
-                        }
-                    }
+                    coverMat[row, (int)(3 * Math.Pow(side, 2)) + boxNumber * side + col % side] = ON;
+                    break;
                 }
             }
         }
-    }
-
-    public CoverBoard(int side)
-    {
-        coverMat = new int[(int)Math.Pow(side, 3), (int)Math.Pow(side, 2) * 4];
-        InitializeCellConstraint(side);
-        InitializeRowConstraint(side);
-        InitializeColConstraint(side);
-        InitializeBoxConstraint(side);
     }
 
     public void GridToCoverBoard(Board board)
@@ -113,7 +105,7 @@ class CoverBoard
                 {
                     if (!board.Cells[row, col].ValueOptions.Contains(value))
                     {
-                        coverMatRow = (int)(row * Math.Pow(board.Side, board.Side)) + col * board.Side;
+                        coverMatRow = (int)(row * Math.Pow(board.Side, 2)) + col * board.Side;
                         for (int coverMatCol = 0; coverMatCol < coverMat.GetLength(1); coverMatCol++)
                         {
                             coverMat[coverMatRow, coverMatCol] = OFF;
@@ -124,9 +116,20 @@ class CoverBoard
         }
     }
 
+    public CoverBoard(Board grid)
+    {
+        coverMat = new int[(int)Math.Pow(grid.Side, 3), (int)Math.Pow(grid.Side, 2) * 4];
+        InitializeCellConstraint(grid.Side);
+        InitializeRowConstraint(grid.Side);
+        InitializeColConstraint(grid.Side);
+        InitializeBoxConstraint(grid.Side);
+        GridToCoverBoard(grid);
+    }
+
+
     public int[,] CoverMat
     {
-        get { return CoverMat; }
-        set { CoverMat = value; }
+        get { return coverMat; }
+        set { coverMat = value; }
     }
 }
