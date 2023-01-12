@@ -94,14 +94,14 @@ class DancingLinks
         for (DataNode colData = selectedCol.Down; colData != selectedCol; colData = colData.Down)
         {
             solution.Add(colData);
-            for (DataNode otherColData = colData.Right; otherColData != colData; otherColData = colData.Right)
+            for (DataNode otherColData = colData.Right; otherColData != colData; otherColData = otherColData.Right)
                 otherColData.Column.Cover();
             if (Solve(k + 1))
                 return true;
             colData = solution[solution.Count - 1];
             solution.Remove(solution[solution.Count - 1]);
             selectedCol = colData.Column;
-            for (DataNode otherColData = colData.Left; otherColData != colData; otherColData = colData.Left)
+            for (DataNode otherColData = colData.Left; otherColData != colData; otherColData = otherColData.Left)
                 otherColData.Column.Uncover();
         }
         selectedCol.Uncover();
