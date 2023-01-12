@@ -15,20 +15,25 @@ static class Solution
         {
             for (int j = 0; j < board.Side; j++)
             {
-                if (j < board.Side - 1)
+                //check if this is the last element of the box we add a line to sperate boxes from the sides
+                if (j < board.Side - 1 && (j + 1) % Math.Sqrt(board.Side) == 0)
                     Console.Write(board.Cells[i, j] + " | ");
                 else
-                    Console.Write(board.Cells[i, j]);
+                    Console.Write(board.Cells[i, j] + " ");
             }
+
+            //going down a line for the next row of the grid
             Console.WriteLine();
-            for (int k = 0; i < board.Side - 1 && k < board.Side * (Math.Sqrt(board.Side) + 1) - Math.Sqrt(board.Side); k++)
+
+            //loop for printing the lines that separate boxes
+            for (int k = 0; i < board.Side - 1 && (i + 1) % Math.Sqrt(board.Side) == 0 && k < (2 * Math.Sqrt(board.Side) + 1) * (Math.Sqrt(board.Side) - 2) + 2 * Math.Sqrt(board.Side) * 2 + Math.Sqrt(board.Side) - 1; k++)
             {
-                if ((k - Math.Sqrt(board.Side) + 1) % ((int)Math.Sqrt(board.Side) + 1) == 0 || (k + 1) == Math.Sqrt(board.Side) && k < board.Side * Math.Sqrt(board.Side) - 1)
-                    Console.Write('+');
-                else
-                    Console.Write('-');
+                Console.Write('-');
+
+                //check if this is the last character of the line we go down a line
+                if (k == ((2 * Math.Sqrt(board.Side) + 1) * (Math.Sqrt(board.Side) - 2) + 2 * Math.Sqrt(board.Side) * 2 + Math.Sqrt(board.Side) - 1) - 1)
+                    Console.WriteLine();
             }
-            Console.WriteLine();
         }
     }
 
