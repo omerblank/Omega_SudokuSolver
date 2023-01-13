@@ -17,9 +17,9 @@ static class Solution
             {
                 //check if this is the last element of the box we add a line to sperate boxes from the sides
                 if (j < board.Side - 1 && (j + 1) % Math.Sqrt(board.Side) == 0)
-                    Console.Write((char)(board.Cells[i, j].Value + '0') + " | ");
+                    Console.Write((char)(board.Cells[i, j].Value + '0') + Constants.BOX_COL_SEPERATOR);
                 else
-                    Console.Write((char)(board.Cells[i, j].Value + '0') + " ");
+                    Console.Write((char)(board.Cells[i, j].Value + '0') + Constants.ELEMENTS_SEPERATOR);
             }
 
             //going down a line for the next row of the grid
@@ -28,7 +28,7 @@ static class Solution
             //loop for printing the lines that separate boxes
             for (int k = 0; i < board.Side - 1 && (i + 1) % Math.Sqrt(board.Side) == 0 && k < (2 * Math.Sqrt(board.Side) + 1) * (Math.Sqrt(board.Side) - 2) + 2 * Math.Sqrt(board.Side) * 2 + Math.Sqrt(board.Side) - 1; k++)
             {
-                Console.Write('-');
+                Console.Write(Constants.BOX_ROW_SEPERATOR);
 
                 //check if this is the last character of the line we go down a line
                 if (k == ((2 * Math.Sqrt(board.Side) + 1) * (Math.Sqrt(board.Side) - 2) + 2 * Math.Sqrt(board.Side) * 2 + Math.Sqrt(board.Side) - 1) - 1)
@@ -47,7 +47,7 @@ static class Solution
         string boardElements = "";
         foreach (Cell cell in board.Cells)
         {
-            boardElements += cell.Value;
+            boardElements += (char)cell.Value + '0';
         }
         return boardElements;
     }

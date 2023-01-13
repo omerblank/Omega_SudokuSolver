@@ -92,18 +92,28 @@ static class Messages
         Console.WriteLine();
     }
 
+    //this function prints the rules of Omega Sudoku Solver
     public static void ShowRules()
     {
-
+        Console.WriteLine($"In Omega Sudoku Solver you can enter a Sudoku Grid as a string.\n" +
+            $"You can enter the string in the Console *Or* enter a text file that contains the string.\n\n" +
+            $"Legal size for a board is N*N where N is an integer from 1-25 and the square root of N is an integer as well.\n" +
+            $"Legal elements are elements with a value from 1-N.\n" +
+            $"Two elements with the same value will not appear in the same row, column or box\n" +
+            $"Here is an example for a 9X9 sudoku grid as a string >>>\n{Constants.STRING_GRID_EXAMPLE}\n\n" +
+            $"The grid will look like this:\n");
+        Solution.PrintBoard(new Board(Constants.STRING_GRID_EXAMPLE));
     }
 
+    //this function prints a welcome message
     public static void WelcomeMessasge()
     {
         Console.WriteLine($"Ω Hi user, welcome to Omega Sudoku Solver! Ω\n" +
-            $"Here you can insert an unsolved sudoku board as a string or as a text file, I will solve it and show you the solution\n");
+            $"Here you can insert an unsolved sudoku board as a string or as a text file\n");
         MakeAChoice("rules", "see sudoku rules", ShowRules);
     }
 
+    //this function prints a goodbye message
     public static void GoodbyeMessage()
     {
         Console.WriteLine("Ω SEE YOU SOON! Ω");
