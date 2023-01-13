@@ -53,7 +53,7 @@ static class BoardValidations
                     colElement = board.Cells[row, col].Value;
                     for (int k = 0; k < board.Side; k++)
                     {
-                        if (k != col && board.Cells[k, col].Value == colElement)
+                        if (k != row && board.Cells[k, col].Value == colElement)
                             throw new DuplicateElementsException($"An element can't appear more than once in a column!\n(element: {colElement} in column: {col})");
                     }
                 }
@@ -73,7 +73,7 @@ static class BoardValidations
         for (int block = 0; block < board.Side; block++)
         {
             blockIndex.Row = block / (int)Math.Sqrt(board.Side);
-            blockIndex.Col = block % (int)Math.Sqrt(board.Side);
+            blockIndex.Col = block % (int)Math.Sqrt(board.Side) * (int)Math.Sqrt(board.Side);
             for (int row = blockIndex.Row; row < blockIndex.Row + Math.Sqrt(board.Side); row++)
             {
                 for (int col = blockIndex.Col; col < blockIndex.Col + Math.Sqrt(board.Side); col++)
@@ -81,10 +81,16 @@ static class BoardValidations
                     if (board.Cells[row, col].Value != Constants.NO_VALUE)
                     {
                         blockElement = board.Cells[row, col].Value;
-                        for (int n = blockIndex.Col; n < blockIndex.Col + Math.Sqrt(board.Side); n++)
-                        {
-                            if (board.Cells[row, n].Value == blockElement)
-                                throw new DuplicateElementsException($"An element can't appear more than once in a block!\n(element: {blockElement} in block: {block})");
+                        for (int blockRow = blockIndex.Row; blockRow < blockIndex.Row + Math.Sqrt(board.Side); blockRow++)
+                        { 
+                            for (int blockCol = blockIndex.Col; blockCol < blockIndex.Col + Math.Sqrt(board.Side); blockCol++)
+                            {
+                                if (!(blockRow == row && blockCol == col))
+                                {
+                                    if (board.Cells[blockRow, blockCol].Value == blockElement)
+                                        throw new DuplicateElementsException($"An element can't appear more than once in a block!\n(element: {blockElement} in block: {block})");
+                                }
+                            }
                         }
                     }
                 }

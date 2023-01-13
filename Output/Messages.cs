@@ -43,8 +43,11 @@ static class Messages
                 return TextFileInput();
 
             case "end":
-                { }
-                break;
+                {
+                    GoodbyeMessage();
+                    Environment.Exit(0);
+                    break;
+                }
         }
         return "";
     }
