@@ -71,15 +71,15 @@ static class BoardValidations
     /// <param name="row"></param>
     /// <param name="num"></param>
     /// <returns>true if the value can be assigned, false if not</returns>
-    public static bool AssignableInRow(Board board, int row, int num)
-    {
-        for (int i = 0; i < board.Side; i++)
-        {
-            if (board.Cells[row, i].Value == num)
-                return false;
-        }
-        return true;
-    }
+    //public static bool AssignableInRow(Board board, int row, int num)
+    //{
+    //    for (int i = 0; i < board.Side; i++)
+    //    {
+    //        if (board.Cells[row, i].Value == num)
+    //            return false;
+    //    }
+    //    return true;
+    //}
 
     /// <summary>
     /// this function checks if we can assign a value in a column
@@ -88,15 +88,15 @@ static class BoardValidations
     /// <param name="col"></param>
     /// <param name="num"></param>
     /// <returns>true if the value can be assigned, false if not</returns>
-    public static bool AssignableInColumn(Board board, int col, int num)
-    {
-        for (int i = 0; i < board.Side; i++)
-        {
-            if (board.Cells[i, col].Value == num)
-                return false;
-        }
-        return true;
-    }
+    //public static bool AssignableInColumn(Board board, int col, int num)
+    //{
+    //    for (int i = 0; i < board.Side; i++)
+    //    {
+    //        if (board.Cells[i, col].Value == num)
+    //            return false;
+    //    }
+    //    return true;
+    //}
 
     /// <summary>
     /// this function checks if we can assign a value in a block (sub square)
@@ -106,18 +106,18 @@ static class BoardValidations
     /// <param name="col"></param>
     /// <param name="num"></param>
     /// <returns>true if the value can be assigned, false if not</returns>
-    public static bool AssignableInBlock(Board board, int row, int col, int num)
-    {
-        for (int i = row; i < row + Math.Sqrt(board.Side); i++)
-        {
-            for (int j = col; j < col + Math.Sqrt(board.Side); j++)
-            {
-                if (board.Cells[i, j].Value == num)
-                    return false;
-            }
-        }
-        return true;
-    }
+    //public static bool AssignableInBlock(Board board, int row, int col, int num)
+    //{
+    //    for (int i = row; i < row + Math.Sqrt(board.Side); i++)
+    //    {
+    //        for (int j = col; j < col + Math.Sqrt(board.Side); j++)
+    //        {
+    //            if (board.Cells[i, j].Value == num)
+    //                return false;
+    //        }
+    //    }
+    //    return true;
+    //}
 
     /// <summary>
     /// this function checks if a value can be assigned into a Cell
@@ -126,10 +126,10 @@ static class BoardValidations
     /// <param name="cell"></param>
     /// <param name="num"></param>
     /// <returns>true if the value can be assigned, false if not</returns>
-    public static bool IsAssignable(Board board, Cell cell, int num)
-    {
-        if (AssignableInRow(board, cell.Index.Row, num) && AssignableInColumn(board, cell.Index.Col, num) && AssignableInBlock(board, cell.BlockIndex.Row, cell.BlockIndex.Col, num))
-            return true;
-        return false;
-    }
+    //public static bool IsAssignable(Board board, Cell cell, int num)
+    //{
+    //    if (AssignableInRow(board, cell.Index.Row, num) && AssignableInColumn(board, cell.Index.Col, num) && AssignableInBlock(board, cell.BlockIndex.Row, cell.BlockIndex.Col, num))
+    //        return true;
+    //    return false;
+    //}
 }

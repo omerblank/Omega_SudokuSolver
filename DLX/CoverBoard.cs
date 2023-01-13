@@ -103,9 +103,9 @@ class CoverBoard
             {
                 for (int value = board.MinValue; value <= board.MaxValue; value++)
                 {
-                    if (!board.Cells[row, col].ValueOptions.Contains(value))
+                    if (board.Cells[row, col].Value != value && board.Cells[row, col].Value != 0)
                     {
-                        coverMatRow = (int)(row * Math.Pow(board.Side, 2)) + col * board.Side;
+                        coverMatRow = row * (int)Math.Pow(board.Side, 2) + col * board.Side + (value - 1);
                         for (int coverMatCol = 0; coverMatCol < coverMat.GetLength(1); coverMatCol++)
                         {
                             coverMat[coverMatRow, coverMatCol] = OFF;

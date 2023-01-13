@@ -17,9 +17,9 @@ static class Solution
             {
                 //check if this is the last element of the box we add a line to sperate boxes from the sides
                 if (j < board.Side - 1 && (j + 1) % Math.Sqrt(board.Side) == 0)
-                    Console.Write(board.Cells[i, j] + " | ");
+                    Console.Write((char)(board.Cells[i, j].Value + '0') + " | ");
                 else
-                    Console.Write(board.Cells[i, j] + " ");
+                    Console.Write((char)(board.Cells[i, j].Value + '0') + " ");
             }
 
             //going down a line for the next row of the grid
@@ -93,14 +93,14 @@ static class Solution
         watch.Start();
         Console.WriteLine("Before solving: ");
         PrintBoard(board);
-        board.FindOptions();
+        //board.FindOptions();
         CoverBoard coverMat = new CoverBoard(board);
         //-----------------------------------------------------
-        //for (int i = 0; i < 4*4*4; i++)
+        //for (int i = 0; i < 4 * 4 * 4; i++)
         //{
-        //    for (int j = 0; j < 4*4*4; j++)
+        //    for (int j = 0; j < 4 * 4 * 4; j++)
         //    {
-        //        Console.Write(coverMat.CoverMat[i,j]);
+        //        Console.Write(coverMat.CoverMat[i, j]);
         //    }
         //    Console.WriteLine();
         //}
@@ -109,7 +109,7 @@ static class Solution
         dlxSolver.Solve(0);
         DlxToGrid(dlxSolver.Solution, board);
         //board.SolveBoard(0, 0);
-        Console.WriteLine("After solving: ");
+        Console.WriteLine("\nAfter solving: ");
         PrintBoard(board);
         watch.Stop();
         Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");// right now the best execution time is 20 ms!

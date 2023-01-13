@@ -41,48 +41,48 @@ class Board
     /// <summary>
     /// this function finds the value options for the missing cells
     /// </summary>
-    public void FindOptions()
-    {
-        for (int i = 0; i < side; i++)
-        {
-            for (int j = 0; j < side; j++)
-            {
-                cells[i, j].AddCandidates(this);
-                if (cells[i, j].ValueOptions.Count == 1)
-                {
-                    cells[i, j].Value = cells[i, j].ValueOptions.First();
-                }
-            }
-        }
-    }
+    //public void FindOptions()
+    //{
+    //    for (int i = 0; i < side; i++)
+    //    {
+    //        for (int j = 0; j < side; j++)
+    //        {
+    //            cells[i, j].AddCandidates(this);
+    //            if (cells[i, j].ValueOptions.Count == 1)
+    //            {
+    //                cells[i, j].Value = cells[i, j].ValueOptions.First();
+    //            }
+    //        }
+    //    }
+    //}
 
-    public bool SolveBoard(int row, int col)
-    {
-        if (row == side - 1 && col == side)
-            return true;
+    //public bool SolveBoard(int row, int col)
+    //{
+    //    if (row == side - 1 && col == side)
+    //        return true;
 
-        if (col == side)
-        {
-            row++;
-            col = 0;
-        }
+    //    if (col == side)
+    //    {
+    //        row++;
+    //        col = 0;
+    //    }
 
-        if (cells[row, col].Value != 0)
-            return SolveBoard(row, col + 1);
+    //    if (cells[row, col].Value != 0)
+    //        return SolveBoard(row, col + 1);
 
-        foreach (int value in cells[row, col].ValueOptions)
-        {
-            if (BoardValidations.IsAssignable(this, cells[row, col], value))
-            {
-                cells[row, col].Value = value;
+    //    foreach (int value in cells[row, col].ValueOptions)
+    //    {
+    //        if (BoardValidations.IsAssignable(this, cells[row, col], value))
+    //        {
+    //            cells[row, col].Value = value;
 
-                if (SolveBoard(row, col + 1))
-                    return true;
-            }
-            cells[row, col].Value = 0;
-        }
-        return false;
-    }
+    //            if (SolveBoard(row, col + 1))
+    //                return true;
+    //        }
+    //        cells[row, col].Value = 0;
+    //    }
+    //    return false;
+    //}
     public Cell[,] Cells
     {
         get { return cells; }
