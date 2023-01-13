@@ -1,4 +1,5 @@
-﻿using System;
+﻿//module for a calculation util that belongs to DLX algorithm
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -6,11 +7,15 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// /// class for representing a cover board
+/// </summary>
 class CoverBoard
 {
     private int[,] coverMat; //a cover matrix (binary matrix)
     public const int ON = 1;//value of a bit that is ON
     public const int OFF = 0;//value of a bit that is OFF
+
     /// <summary>
     /// this function intializes the cell constraint in the cover matrix
     /// </summary>
@@ -94,6 +99,10 @@ class CoverBoard
         }
     }
 
+    /// <summary>
+    /// this function turning OFF rows in the cover board according to the elements in the given grid
+    /// </summary>
+    /// <param name="board"> the grid </param>
     public void GridToCoverBoard(Board board)
     {
         int coverMatRow;
@@ -116,17 +125,21 @@ class CoverBoard
         }
     }
 
-    public CoverBoard(Board grid)
+    /// <summary>
+    /// this function creates a cover board
+    /// </summary>
+    /// <param name="board"> the grid </param>
+    public CoverBoard(Board board)
     {
-        coverMat = new int[(int)Math.Pow(grid.Side, 3), (int)Math.Pow(grid.Side, 2) * 4];
-        InitializeCellConstraint(grid.Side);
-        InitializeRowConstraint(grid.Side);
-        InitializeColConstraint(grid.Side);
-        InitializeBoxConstraint(grid.Side);
-        GridToCoverBoard(grid);
+        coverMat = new int[(int)Math.Pow(board.Side, 3), (int)Math.Pow(board.Side, 2) * 4];
+        InitializeCellConstraint(board.Side);
+        InitializeRowConstraint(board.Side);
+        InitializeColConstraint(board.Side);
+        InitializeBoxConstraint(board.Side);
+        GridToCoverBoard(board);
     }
 
-
+    //coverMat property
     public int[,] CoverMat
     {
         get { return coverMat; }

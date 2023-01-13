@@ -1,13 +1,15 @@
-﻿using System;
+﻿//module for a calculation util
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
 /// <summary>
-/// class for calculations on the board
+/// class for representing the grid
 /// </summary>
 class Board
 {
@@ -22,7 +24,18 @@ class Board
     public Board(string input)
     {
         //checking that the input is valid before starting
-        InputValidations.PreCalculating(input);
+        try
+        {
+            InputValidations.PreCalculating(input);
+        }
+        catch(InputLengthException)
+        {
+            throw;
+        }
+        catch(ArgumentException)
+        {
+            throw;
+        }
         //initialize the board
         side = (int)Math.Sqrt(input.Length);
         minValue = 1;
@@ -36,6 +49,7 @@ class Board
                 cells[i, j] = new Cell(new Location(i, j), input[i * side + j] - '0', side);
             }
         }
+        BoardValidations.ValidateDuplicates(this);
     }
 
     /// <summary>
@@ -83,24 +97,29 @@ class Board
     //    }
     //    return false;
     //}
+
+    //cells property
     public Cell[,] Cells
     {
         get { return cells; }
         set { cells = value; }
     }
 
+    //side property
     public int Side
     {
         get { return side; }
         set { side = value; }
     }
 
+    //minValue property
     public int MinValue
     {
         get { return minValue; }
         set { minValue = value; }
     }
 
+    //maxValue property
     public int MaxValue
     {
         get { return maxValue; }

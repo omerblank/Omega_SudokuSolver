@@ -1,4 +1,5 @@
-﻿using System;
+﻿//module for a calculation util that belongs to DLX algorithm, this is the main calculation module
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -7,17 +8,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
+/// <summary>
+/// class for representing a dlx structure
+/// </summary>
 class DancingLinks
 {
-    private ColumnNode header;
-    private List<DataNode> solution;
+    private ColumnNode header; //the header of the DLX structure
+    private List<DataNode> solution; //the solution list
 
+    /// <summary>
+    /// this function creates a dancing links structure
+    /// </summary>
+    /// <param name="coverMatrix"> the cover matrix of the grid </param>
     public DancingLinks(CoverBoard coverMatrix)
     {
         solution = new List<DataNode>();
         header = MakeDLXBoard(coverMatrix);
     }
 
+    /// <summary>
+    /// this function selects the column with the minimum size
+    /// </summary>
+    /// <returns> the column with the minimum size </returns>
     private ColumnNode SelectMinColumnNode()
     {
         ColumnNode minCol = (ColumnNode)header.Right;
@@ -34,25 +46,12 @@ class DancingLinks
         }
         return minCol;
     }
-    private void PrintBoard()
-    { // diagnostics to have a look at the board state
-        Console.WriteLine("The board: ");
-        for (ColumnNode tmp = (ColumnNode)header.Right; tmp != header; tmp = (ColumnNode)tmp.Right)
-        {
 
-            for (DataNode d = tmp.Down; d != tmp; d = d.Down)
-            {
-                String solutionList = "";
-                solutionList += d.Column.Name + ", ";
-                for (DataNode i = d.Right; i != d; i = i.Right)
-                {
-                    solutionList += i.Column.Name + ", ";
-                }
-                Console.WriteLine(solutionList);
-            }
-        }
-    }
-
+    /// <summary>
+    /// this function creates a dlx board using the cover matrix of the grid
+    /// </summary>
+    /// <param name="coverBoard"> the cover matrix object </param>
+    /// <returns> the header node of the dlx board </returns>
     private ColumnNode MakeDLXBoard(CoverBoard coverBoard)
     {
         ColumnNode headerNode = new ColumnNode("HEADER");
@@ -85,7 +84,11 @@ class DancingLinks
         return headerNode;
     }
 
-    public bool Solve(int k)
+    /// <summary>
+    /// this function solves the grid (adding the correct data nodes to the solution list)
+    /// </summary>
+    /// <returns> true if the grid solved successfully, if not, returns false </returns>
+    public bool Solve()
     {
         if (header.Right == header)
             return true;
@@ -96,7 +99,7 @@ class DancingLinks
             solution.Add(colData);
             for (DataNode otherColData = colData.Right; otherColData != colData; otherColData = otherColData.Right)
                 otherColData.Column.Cover();
-            if (Solve(k + 1))
+            if (Solve())
                 return true;
             colData = solution[solution.Count - 1];
             solution.Remove(solution[solution.Count - 1]);
@@ -108,6 +111,7 @@ class DancingLinks
         return false;
     }
 
+    //solution property
     public List<DataNode> Solution
     {
         get { return solution; }

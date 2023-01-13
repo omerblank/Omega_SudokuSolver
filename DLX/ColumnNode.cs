@@ -1,19 +1,32 @@
-﻿using System;
+﻿//module for a calculation util that belongs to DLX algorithm
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// class for representing a column node
+/// </summary>
 class ColumnNode : DataNode
 {
-    private int size;
-    private string name;
+    private int size; //the size of the column node
+    private string name; //the name of the column node
+
+    /// <summary>
+    /// this function creates a column node
+    /// </summary>
+    /// <param name="name"> the name of the column node </param>
     public ColumnNode(string name) : base()
     {
         size = 0;
         this.name = name;
         Column = this;
     }
+
+    /// <summary>
+    /// this function covers a column
+    /// </summary>
     public void Cover()
     {
         HorizontalDisconnection();
@@ -26,6 +39,10 @@ class ColumnNode : DataNode
             }
         }
     }
+
+    /// <summary>
+    /// this function uncovers a column
+    /// </summary>
     public void Uncover()
     {
         for (DataNode i = Up; i != this; i = i.Up)
@@ -38,11 +55,15 @@ class ColumnNode : DataNode
         }
         HorizontalReconnection();
     }
+
+    //size property
     public int Size
     {
         get { return size; }
         set { size = value; }
     }
+
+    //name property
     public string Name
     {
         get { return name; }

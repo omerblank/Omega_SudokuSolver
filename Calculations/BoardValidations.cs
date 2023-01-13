@@ -1,63 +1,35 @@
-﻿using System;
+﻿//module for validations after getting the input
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// class for validations on the board
+/// </summary>
 static class BoardValidations
 {
+    /// <summary>
+    /// this function check for duplicated elements in a row
+    /// </summary>
+    /// <param name="board"> the grid </param>
+    /// <exception cref="DuplicateElementsException"> exception to throw </exception>
     public static void ValidateDuplicatesInRows(Board board)
     {
         int rowElement;
-        for (int i = 0; i < board.Side; i++)
+        for (int row = 0; row < board.Side; row++)
         {
-            for (int j = 0; j < board.Side; j++)
+            for (int col = 0; col < board.Side; col++)
             {
-                rowElement = board.Cells[i, j].Value;
-                for (int k = 0; k < board.Side; k++)
+                if (board.Cells[row, col].Value != Constants.NO_VALUE)
                 {
-                    if (k != j && board.Cells[i, k].Value == rowElement)
-                        throw new DuplicateElementsException($"An element can't appear more than once in a row!\n(element: {rowElement} in row: {i}");
-                }
-            }
-        }
-    }
-
-    public static void ValidateDuplicatesInColumns(Board board)
-    {
-        int colElement;
-        for (int i = 0; i < board.Side; i++)
-        {
-            for (int j = 0; j < board.Side; j++)
-            {
-                colElement = board.Cells[j, i].Value;
-                for (int k = 0; k < board.Side; k++)
-                {
-                    if (k != j && board.Cells[k, i].Value == colElement)
-                        throw new DuplicateElementsException($"An element can't appear more than once in a column!\n(element: {colElement} in column: {i}");
-                }
-            }
-        }
-    }
-
-    public static void ValidateDuplicatesInBlocks(Board board)
-    {
-        Location blockIndex = new Location(0, 0);
-        int blockElement;
-        for (int i = 0; i < board.Side; i++)
-        {
-            blockIndex.Row = i / 3 % 3;
-            blockIndex.Col = i % 3;
-            for (int j = blockIndex.Row; j < blockIndex.Row + Math.Sqrt(board.Side); j++)
-            {
-                for (int k = blockIndex.Col; k < blockIndex.Col + Math.Sqrt(board.Side); k++)
-                {
-                    blockElement = board.Cells[j, k].Value;
-                    for (int n = blockIndex.Col; n < blockIndex.Col + Math.Sqrt(board.Side); n++)
+                    rowElement = board.Cells[row, col].Value;
+                    for (int k = 0; k < board.Side; k++)
                     {
-                        if(board.Cells[j, n].Value == blockElement)
-                            throw new DuplicateElementsException($"An element can't appear more than once in a block!\n(element: {blockElement} in block: {i}");
+                        if (k != col && board.Cells[row, k].Value == rowElement)
+                            throw new DuplicateElementsException($"An element can't appear more than once in a row!\n(element: {rowElement} in row: {row})");
                     }
                 }
             }
@@ -65,71 +37,69 @@ static class BoardValidations
     }
 
     /// <summary>
-    /// this function checks if we can assign a value in a row
+    /// this function check for duplicated elements in a column
     /// </summary>
-    /// <param name="board"></param>
-    /// <param name="row"></param>
-    /// <param name="num"></param>
-    /// <returns>true if the value can be assigned, false if not</returns>
-    //public static bool AssignableInRow(Board board, int row, int num)
-    //{
-    //    for (int i = 0; i < board.Side; i++)
-    //    {
-    //        if (board.Cells[row, i].Value == num)
-    //            return false;
-    //    }
-    //    return true;
-    //}
+    /// <param name="board"> the grid </param>
+    /// <exception cref="DuplicateElementsException"> exception to throw </exception>
+    public static void ValidateDuplicatesInColumns(Board board)
+    {
+        int colElement;
+        for (int col = 0; col < board.Side; col++)
+        {
+            for (int row = 0; row < board.Side; row++)
+            {
+                if (board.Cells[row, col].Value != Constants.NO_VALUE)
+                {
+                    colElement = board.Cells[row, col].Value;
+                    for (int k = 0; k < board.Side; k++)
+                    {
+                        if (k != col && board.Cells[k, col].Value == colElement)
+                            throw new DuplicateElementsException($"An element can't appear more than once in a column!\n(element: {colElement} in column: {col})");
+                    }
+                }
+            }
+        }
+    }
 
     /// <summary>
-    /// this function checks if we can assign a value in a column
+    /// this function check for duplicated elements in a block
     /// </summary>
-    /// <param name="board"></param>
-    /// <param name="col"></param>
-    /// <param name="num"></param>
-    /// <returns>true if the value can be assigned, false if not</returns>
-    //public static bool AssignableInColumn(Board board, int col, int num)
-    //{
-    //    for (int i = 0; i < board.Side; i++)
-    //    {
-    //        if (board.Cells[i, col].Value == num)
-    //            return false;
-    //    }
-    //    return true;
-    //}
+    /// <param name="board"> the grid </param>
+    /// <exception cref="DuplicateElementsException"> exception to throw </exception>
+    public static void ValidateDuplicatesInBlocks(Board board)
+    {
+        Location blockIndex = new Location(0, 0);
+        int blockElement;
+        for (int block = 0; block < board.Side; block++)
+        {
+            blockIndex.Row = block / (int)Math.Sqrt(board.Side);
+            blockIndex.Col = block % (int)Math.Sqrt(board.Side);
+            for (int row = blockIndex.Row; row < blockIndex.Row + Math.Sqrt(board.Side); row++)
+            {
+                for (int col = blockIndex.Col; col < blockIndex.Col + Math.Sqrt(board.Side); col++)
+                {
+                    if (board.Cells[row, col].Value != Constants.NO_VALUE)
+                    {
+                        blockElement = board.Cells[row, col].Value;
+                        for (int n = blockIndex.Col; n < blockIndex.Col + Math.Sqrt(board.Side); n++)
+                        {
+                            if (board.Cells[row, n].Value == blockElement)
+                                throw new DuplicateElementsException($"An element can't appear more than once in a block!\n(element: {blockElement} in block: {block})");
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     /// <summary>
-    /// this function checks if we can assign a value in a block (sub square)
+    /// this function check for illegal duplicates in the grid
     /// </summary>
-    /// <param name="board"></param>
-    /// <param name="row"></param>
-    /// <param name="col"></param>
-    /// <param name="num"></param>
-    /// <returns>true if the value can be assigned, false if not</returns>
-    //public static bool AssignableInBlock(Board board, int row, int col, int num)
-    //{
-    //    for (int i = row; i < row + Math.Sqrt(board.Side); i++)
-    //    {
-    //        for (int j = col; j < col + Math.Sqrt(board.Side); j++)
-    //        {
-    //            if (board.Cells[i, j].Value == num)
-    //                return false;
-    //        }
-    //    }
-    //    return true;
-    //}
-
-    /// <summary>
-    /// this function checks if a value can be assigned into a Cell
-    /// </summary>
-    /// <param name="board"></param>
-    /// <param name="cell"></param>
-    /// <param name="num"></param>
-    /// <returns>true if the value can be assigned, false if not</returns>
-    //public static bool IsAssignable(Board board, Cell cell, int num)
-    //{
-    //    if (AssignableInRow(board, cell.Index.Row, num) && AssignableInColumn(board, cell.Index.Col, num) && AssignableInBlock(board, cell.BlockIndex.Row, cell.BlockIndex.Col, num))
-    //        return true;
-    //    return false;
-    //}
+    /// <param name="board"> the grid </param>
+    public static void ValidateDuplicates(Board board)
+    {
+        ValidateDuplicatesInRows(board);
+        ValidateDuplicatesInColumns(board);
+        ValidateDuplicatesInBlocks(board);
+    }
 }

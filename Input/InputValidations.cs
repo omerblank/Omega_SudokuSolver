@@ -1,12 +1,18 @@
-﻿using System;
+﻿//module for validations right when getting the input
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-// class for validations on the input
 static class InputValidations
 {
+
+    /// <summary>
+    /// this function checks if the given grid as a string is in valid length
+    /// </summary>
+    /// <param name="input"> the given grid as a string </param>
+    /// <exception cref="InputLengthException"> exception for invalid string length </exception>
     public static void ValidateInputLength(string input)
     {
         for (int i = Constants.MIN_SIZE; i <= Constants.MAX_SIZE; i++)
@@ -17,6 +23,11 @@ static class InputValidations
         throw new InputLengthException("The input length is illegal!");
     }
 
+    /// <summary>
+    /// this function finds all possible values ​​in the board
+    /// </summary>
+    /// <param name="input"> the given grid as a string </param>
+    /// <returns> all the possible values in the board as a hashset </returns>
     public static HashSet<int> GetValidValues(string input)
     {
         HashSet<int> validValues = new HashSet<int>();
@@ -27,6 +38,11 @@ static class InputValidations
         return validValues;
     }
 
+    /// <summary>
+    /// this function checks if all the elements in the board have a valid value
+    /// </summary>
+    /// <param name="input"> the given grid as a string </param>
+    /// <exception cref="ArgumentException"> exception for invalid value </exception>
     public static void ValidateElementsValues(string input)
     {
         HashSet<int> validValues = GetValidValues(input);
@@ -44,9 +60,20 @@ static class InputValidations
     /// <exception cref="ArgumentException"></exception>
     public static void PreCalculating(string input)
     {
-        //check if the input length is valid
-        ValidateInputLength(input);
-        // check if all the elements in the input are valid
-        ValidateElementsValues(input);
+        try
+        {
+            //check if the input length is valid
+            ValidateInputLength(input);
+            // check if all the elements in the input are valid
+            ValidateElementsValues(input);
+        }
+        catch(InputLengthException ile)
+        {
+            throw;
+        }
+        catch(ArgumentException ae)
+        {
+            throw;
+        }
     }
 }
