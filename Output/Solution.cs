@@ -1,4 +1,5 @@
-﻿using System;
+﻿//module for running the program and showing results to the user
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,8 +41,8 @@ static class Solution
     /// <summary>
     /// this function converts a board to a string
     /// </summary>
-    /// <param name="board"></param>
-    /// <returns>the board as a string</returns>
+    /// <param name="board"> the board </param>
+    /// <returns> the board as a string </returns>
     public static string BoardToString(Board board)
     {
         string boardElements = "";
@@ -52,6 +53,11 @@ static class Solution
         return boardElements;
     }
 
+    /// <summary>
+    /// this function converts dlx solution list to a grid
+    /// </summary>
+    /// <param name="solution"> the dlx solution list </param>
+    /// <param name="board"> the grid </param>
     public static void DlxToGrid(List<DataNode> solution, Board board)
     {
         foreach (DataNode node in solution)
@@ -83,18 +89,39 @@ static class Solution
     }
 
     /// <summary>
-    /// this function prints the solved sudoku board and returns the solve as a string
+    /// this function prints the grid before and after solving it, and returns the solution as a string
     /// </summary>
     /// <returns>the solve as a string
     /// </returns>
     public static string Solve(Board board)
     {
-        var watch = new System.Diagnostics.Stopwatch();
-        watch.Start();
-        Console.WriteLine("Before solving: ");
-        PrintBoard(board);
+        try
+        {
+            var watch = new System.Diagnostics.Stopwatch();
+            watch.Start();
+            Console.WriteLine("Before solving: ");
+            PrintBoard(board);
+            CoverBoard coverMat = new CoverBoard(board);
+            DancingLinks dlxSolver = new DancingLinks(coverMat);
+            dlxSolver.Solve();
+            DlxToGrid(dlxSolver.Solution, board);
+            //board.SolveBoard(0, 0);
+            Console.WriteLine("\nAfter solving: ");
+            PrintBoard(board);
+            watch.Stop();
+            Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
+            return BoardToString(board);
+        }
+        catch (InputLengthException)
+        {
+            throw;
+        }
+        catch (ArgumentException)
+        {
+            throw;
+        }
         //board.FindOptions();
-        CoverBoard coverMat = new CoverBoard(board);
+
         //-----------------------------------------------------
         //for (int i = 0; i < 4 * 4 * 4; i++)
         //{
@@ -105,24 +132,43 @@ static class Solution
         //    Console.WriteLine();
         //}
         //-----------------------------------------------------
-        DancingLinks dlxSolver = new DancingLinks(coverMat);
-        dlxSolver.Solve(0);
-        DlxToGrid(dlxSolver.Solution, board);
-        //board.SolveBoard(0, 0);
-        Console.WriteLine("\nAfter solving: ");
-        PrintBoard(board);
-        watch.Stop();
-        Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");// right now the best execution time is 20 ms!
-        return BoardToString(board);
+
     }
 
-
+    /// <summary>
+    /// this function running the sudoku solver in a loop
+    /// </summary>
     public static void SolverRunning()
     {
-        Solve(new Board(Messages.ChooseMode()));
-        Messages.MakeAChoice("c", "continue", SolverRunning);
+        try
+        {
+            Solve(new Board(Messages.ChooseMode()));
+            Messages.MakeAChoice("c", "continue", SolverRunning);
+        }
+        catch (InputLengthException ile)
+        {
+            Console.WriteLine(ile.Message);
+            Messages.MakeAChoice("c", "continue", SolverRunning);
+        }
+        catch (ArgumentException ae)
+        {
+            Console.WriteLine(ae.Message);
+            Messages.MakeAChoice("c", "continue", SolverRunning);
+        }
+        catch(DuplicateElementsException dee)
+        {
+            Console.WriteLine(dee.Message);
+            Messages.MakeAChoice("c", "continue", SolverRunning);
+        }
+        //finally
+        //{
+        //    Messages.MakeAChoice("c", "continue", SolverRunning);
+        //}
     }
 
+    /// <summary>
+    /// this function running the whole program
+    /// </summary>
     public static void SudokuMain()
     {
         Messages.WelcomeMessasge();

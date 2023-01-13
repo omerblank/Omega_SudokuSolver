@@ -1,4 +1,5 @@
-﻿using System;
+﻿//module for printing messages for the user
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,11 @@ using System.Threading.Tasks;
 
 static class Messages
 {
+
+    /// <summary>
+    /// this function let the user choose the way he wants to give the input
+    /// </summary>
+    /// <returns> the given input as a string </returns>
     public static string ChooseMode()
     {
         string mode;
@@ -21,6 +27,11 @@ static class Messages
         return OperateMode(mode);
     }
 
+    /// <summary>
+    /// this function select the mode according to the choice of the user
+    /// </summary>
+    /// <param name="mode"> the mode that the user chose </param>
+    /// <returns> the given input as a string </returns>
     public static string OperateMode(string mode)
     {
         switch (mode.ToLower())
@@ -32,12 +43,19 @@ static class Messages
                 return TextFileInput();
 
             case "end":
-                { }
-                break;
+                {
+                    GoodbyeMessage();
+                    Environment.Exit(0);
+                    break;
+                }
         }
         return "";
     }
 
+    /// <summary>
+    /// this function gets a string from the user and returns it
+    /// </summary>
+    /// <returns> the given input as a string </returns>
     public static string StringInput()
     {
         string stringInput;
@@ -47,6 +65,10 @@ static class Messages
         return stringInput;
     }
 
+    /// <summary>
+    /// this function gets a text file from the user and returns it as a string
+    /// </summary>
+    /// <returns> the given input as a string </returns>
     public static string TextFileInput()
     {
         string textFileInput;
@@ -77,10 +99,16 @@ static class Messages
         return "";
     }
 
+    /// <summary>
+    /// this function lets the user to make a choice (operate something or continue)
+    /// </summary>
+    /// <param name="validChoice"> the input that the user need to write to operate something </param>
+    /// <param name="doWhat"> what will be operated </param>
+    /// <param name="operation"> the operation </param>
     public static void MakeAChoice(string validChoice, string doWhat, Action operation)
     {
         string choice;
-        Console.WriteLine(($"Ω PRESS '{validChoice}' TO {doWhat} OR ENTER TO SKIP Ω\n"));
+        Console.WriteLine(($"\nΩ PRESS '{validChoice}' TO {doWhat} OR ENTER TO SKIP Ω\n"));
         choice = Console.ReadLine();
         while (choice.ToLower() != validChoice && choice != "")
         {
