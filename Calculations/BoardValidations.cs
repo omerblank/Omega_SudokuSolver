@@ -16,7 +16,7 @@ static class BoardValidations
     /// </summary>
     /// <param name="board"> the grid </param>
     /// <exception cref="DuplicateElementsException"> exception to throw </exception>
-    public static void ValidateDuplicatesInRows(Board board)
+    private static void ValidateDuplicatesInRows(Board board)
     {
         int rowElement;
         for (int row = 0; row < board.Side; row++)
@@ -41,7 +41,7 @@ static class BoardValidations
     /// </summary>
     /// <param name="board"> the grid </param>
     /// <exception cref="DuplicateElementsException"> exception to throw </exception>
-    public static void ValidateDuplicatesInColumns(Board board)
+    private static void ValidateDuplicatesInColumns(Board board)
     {
         int colElement;
         for (int col = 0; col < board.Side; col++)
@@ -66,7 +66,7 @@ static class BoardValidations
     /// </summary>
     /// <param name="board"> the grid </param>
     /// <exception cref="DuplicateElementsException"> exception to throw </exception>
-    public static void ValidateDuplicatesInBlocks(Board board)
+    private static void ValidateDuplicatesInBlocks(Board board)
     {
         Location blockIndex = new Location(0, 0);
         int blockElement;

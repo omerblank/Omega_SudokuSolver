@@ -112,6 +112,40 @@ class DancingLinks
         return false;
     }
 
+    /// <summary>
+    /// this function converts dlx solution list to a grid
+    /// </summary>
+    /// <param name="board"> the grid </param>
+    public void DlxToGrid(Board board)
+    {
+        foreach (DataNode node in solution)
+        {
+            DataNode rcNode = node;
+            int min = int.Parse(rcNode.Column.Name);
+
+            for (DataNode tmp = node.Right; tmp != node; tmp = tmp.Right)
+            {
+                int val = int.Parse(tmp.Column.Name);
+
+                if (val < min)
+                {
+                    min = val;
+                    rcNode = tmp;
+                }
+            }
+
+            // we get line and column
+            int ans1 = int.Parse(rcNode.Column.Name);
+            int ans2 = int.Parse(rcNode.Right.Column.Name);
+            int r = ans1 / board.Side;
+            int c = ans1 % board.Side;
+            // and the affected value
+            int num = (ans2 % board.Side) + 1;
+            // we affect that on the result grid
+            board.Cells[r, c].Value = num;
+        }
+    }
+
     //solution property
     public List<DataNode> Solution
     {

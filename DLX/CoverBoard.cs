@@ -20,7 +20,7 @@ class CoverBoard
     /// this function intializes the cell constraint in the cover matrix
     /// </summary>
     /// <param name="side"> the grid's side size </param>
-    public void InitializeCellConstraint(int side)
+    private void InitializeCellConstraint(int side)
     {
         for (int row = 0; row < coverMat.GetLength(0); row++)
         {
@@ -39,7 +39,7 @@ class CoverBoard
     /// this function intializes the row constraint in the cover matrix
     /// </summary>
     /// <param name="side"> the grid's side size </param>
-    public void InitializeRowConstraint(int side)
+    private void InitializeRowConstraint(int side)
     {
         for (int row = 0; row < coverMat.GetLength(0); row++)
         {
@@ -58,7 +58,7 @@ class CoverBoard
     /// this function intializes the column constraint in the cover matrix
     /// </summary>
     /// <param name="side"> the grid's side size </param>
-    public void InitializeColConstraint(int side)
+    private void InitializeColConstraint(int side)
     {
         for (int row = 0; row < coverMat.GetLength(0); row++)
         {
@@ -78,7 +78,7 @@ class CoverBoard
     /// this function intializes the box constraint in the cover matrix
     /// </summary>
     /// <param name="side"> the grid's side size </param>
-    public void InitializeBoxConstraint(int side)
+    private void InitializeBoxConstraint(int side)
     {
         Location boxIndex;
         int boxNumber, cellRow, cellCol;
@@ -103,7 +103,7 @@ class CoverBoard
     /// this function turning OFF rows in the cover board according to the elements in the given grid
     /// </summary>
     /// <param name="board"> the grid </param>
-    public void GridToCoverBoard(Board board)
+    private void GridToCoverBoard(Board board)
     {
         int coverMatRow;
         for (int row = 0; row < board.Side; row++)
