@@ -70,34 +70,6 @@ class Board
     //    }
     //}
 
-    //public bool SolveBoard(int row, int col)
-    //{
-    //    if (row == side - 1 && col == side)
-    //        return true;
-
-    //    if (col == side)
-    //    {
-    //        row++;
-    //        col = 0;
-    //    }
-
-    //    if (cells[row, col].Value != 0)
-    //        return SolveBoard(row, col + 1);
-
-    //    foreach (int value in cells[row, col].ValueOptions)
-    //    {
-    //        if (BoardValidations.IsAssignable(this, cells[row, col], value))
-    //        {
-    //            cells[row, col].Value = value;
-
-    //            if (SolveBoard(row, col + 1))
-    //                return true;
-    //        }
-    //        cells[row, col].Value = 0;
-    //    }
-    //    return false;
-    //}
-
     //cells property
     public Cell[,] Cells
     {

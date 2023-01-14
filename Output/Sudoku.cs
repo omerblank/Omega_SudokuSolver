@@ -56,7 +56,7 @@ static class Sudoku
         return boardElements;
     }
 
-    
+
 
     /// <summary>
     /// this function prints the grid before and after solving it, and returns the solution as a string
@@ -73,10 +73,9 @@ static class Sudoku
             PrintBoard(board);
             CoverBoard coverMat = new CoverBoard(board);
             DancingLinks dlxSolver = new DancingLinks(coverMat);
-            if(!dlxSolver.Search())
+            if (!dlxSolver.Search())
                 throw new UnsolvableGridException("The grid is unsolvable!");
             dlxSolver.DlxToGrid(board);
-            //board.SolveBoard(0, 0);
             Console.WriteLine("\nAfter solving: ");
             PrintBoard(board);
             watch.Stop();
@@ -126,9 +125,14 @@ static class Sudoku
             Console.WriteLine(ae.Message);
             Messages.MakeAChoice("c", "continue", SudokuRunner);
         }
-        catch(DuplicateElementsException dee)
+        catch (DuplicateElementsException dee)
         {
             Console.WriteLine(dee.Message);
+            Messages.MakeAChoice("c", "continue", SudokuRunner);
+        }
+        catch (UnsolvableGridException uge)
+        {
+            Console.WriteLine(uge.Message);
             Messages.MakeAChoice("c", "continue", SudokuRunner);
         }
         //catch(UnsolvableGridException uge)
