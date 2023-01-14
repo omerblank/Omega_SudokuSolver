@@ -11,29 +11,35 @@ static class Messages
     /// <summary>
     /// this function let the user choose the way he wants to give the input
     /// </summary>
-    /// <returns> the given input as a string </returns>
     public static void ChooseMode()
     {
-        string mode;
-        Console.WriteLine($"Choose the way you want to give the input from the following options or type \"end\" to end: \n");
-        Constants.INPUT_OPTIONS.ForEach(Console.WriteLine);
-        Console.WriteLine();
-        mode = Console.ReadLine();
-        while (!Constants.INPUT_OPTIONS.Contains(mode.ToLower()) && mode.ToLower() != "end")
+        try
         {
-            Console.WriteLine($"\nΩ INVALID INPUT! Ω\nchoose the way you want to give the input from the following options or type \"end\" to end: \n");
+            string mode;
+            Console.WriteLine($"Choose the way you want to give the input from the following options or type \"end\" to end: \n");
             Constants.INPUT_OPTIONS.ForEach(Console.WriteLine);
             Console.WriteLine();
             mode = Console.ReadLine();
+            while (!Constants.INPUT_OPTIONS.Contains(mode.ToLower()) && mode.ToLower() != "end")
+            {
+                Console.WriteLine($"\nΩ INVALID INPUT! Ω\nchoose the way you want to give the input from the following options or type \"end\" to end: \n");
+                Constants.INPUT_OPTIONS.ForEach(Console.WriteLine);
+                Console.WriteLine();
+                mode = Console.ReadLine();
+            }
+            OperateMode(mode);
         }
-        OperateMode(mode);
+        catch (NullReferenceException nre)
+        {
+            Console.WriteLine(nre.Message + "\n");
+            ChooseMode();
+        }
     }
 
     /// <summary>
     /// this function select the mode according to the choice of the user
     /// </summary>
     /// <param name="mode"> the mode that the user chose </param>
-    /// <returns> the given input as a string </returns>
     public static void OperateMode(string mode)
     {
         switch (mode.ToLower())
@@ -56,20 +62,18 @@ static class Messages
     /// <summary>
     /// this function gets a string from the user and returns it
     /// </summary>
-    /// <returns> the given input as a string </returns>
     public static void StringInput()
     {
-        string stringGrid;
-        Console.WriteLine("\nEnter the string: ");
-        stringGrid = Console.ReadLine();
-        Console.WriteLine();
-        Sudoku.Solve(new Board(stringGrid));
+            string stringGrid;
+            Console.WriteLine("\nEnter the string: ");
+            stringGrid = Console.ReadLine();
+            Console.WriteLine();
+            Sudoku.Solve(new Board(stringGrid));
     }
 
     /// <summary>
     /// this function gets a text file from the user and returns it as a string
     /// </summary>
-    /// <returns> the given input as a string </returns>
     public static void TextFileInput()
     {
         string stringGrid, filePath;
@@ -107,24 +111,32 @@ static class Messages
     /// <param name="operation"> the operation </param>
     public static void MakeAChoice(string validChoice, string doWhat, Action operation)
     {
-        string choice;
-        Console.WriteLine(($"\nΩ PRESS '{validChoice}' TO {doWhat} OR Enter TO skip Ω\n"));
-        choice = Console.ReadLine();
-        while (choice.ToLower() != validChoice && choice != "")
+        try
         {
-            Console.WriteLine(($"\nΩ INVALID INPUT, PRESS '{validChoice}' TO {doWhat} OR Enter TO skip Ω\n"));
+            string choice;
+            Console.WriteLine(($"\nΩ PRESS '{validChoice}' TO {doWhat} OR Enter TO skip Ω\n"));
             choice = Console.ReadLine();
+            while (choice.ToLower() != validChoice && choice != "")
+            {
+                Console.WriteLine(($"\nΩ INVALID INPUT, PRESS '{validChoice}' TO {doWhat} OR Enter TO skip Ω\n"));
+                choice = Console.ReadLine();
+            }
+            Console.WriteLine();
+            if (choice.ToLower() == validChoice)
+                operation();
         }
-        Console.WriteLine();
-        if (choice.ToLower() == validChoice)
-            operation();
+        catch (NullReferenceException nre)
+        {
+            Console.WriteLine(nre.Message);
+            MakeAChoice(validChoice, doWhat, operation);
+        }
     }
 
     //this function prints the rules of Omega Sudoku Solver
     public static void ShowRules()
     {
         Console.WriteLine($"In Omega Sudoku Solver you can enter a Sudoku Grid as a string.\n" +
-            $"You can enter the string in the Console *Or* enter a text file that contains the string.\n\n" +
+            $"You can enter the string in the Console *Or* enter a text file that contains ONLY the string.\n\n" +
             $"Legal size for a board is N*N where N is an integer from 1-25 and the square root of N is an integer as well.\n" +
             $"Legal elements are elements with a value from 1-N.\n" +
             $"Two elements with the same value will not appear in the same row, column or box.\n" +
