@@ -64,11 +64,11 @@ static class Messages
     /// </summary>
     public static void StringInput()
     {
-            string stringGrid;
-            Console.WriteLine("\nEnter the string: ");
-            stringGrid = Console.ReadLine();
-            Console.WriteLine();
-            Sudoku.Solve(new Board(stringGrid));
+        string stringGrid;
+        Console.WriteLine("\nEnter the string: ");
+        stringGrid = Console.ReadLine();
+        Console.WriteLine();
+        Sudoku.Solve(new Board(stringGrid));
     }
 
     /// <summary>
@@ -139,6 +139,9 @@ static class Messages
             $"You can enter the string in the Console *Or* enter a text file that contains ONLY the string.\n\n" +
             $"Legal size for a board is N*N where N is an integer from 1-25 and the square root of N is an integer as well.\n" +
             $"Legal elements are elements with a value from 1-N.\n" +
+            $"0 symmbolizes an element with no value.\n" +
+            $"the first N chars are in the first row.\n" +
+            $"the second N chars are in the second row.\n" +
             $"Two elements with the same value will not appear in the same row, column or box.\n" +
             $"Here is an example for a 9X9 sudoku grid as a string >>>\n{Constants.STRING_GRID_EXAMPLE}\n\n" +
             $"The grid will look like this:\n");
