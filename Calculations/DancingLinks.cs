@@ -88,7 +88,7 @@ class DancingLinks
     /// this function solves the grid (adding the correct data nodes to the solution list)
     /// </summary>
     /// <returns> true if the grid solved successfully, if not, returns false </returns>
-    public bool Solve()
+    public bool Search()
     {
         if (header.Right == header)
             return true;
@@ -99,7 +99,7 @@ class DancingLinks
             solution.Add(colData);
             for (DataNode otherColData = colData.Right; otherColData != colData; otherColData = otherColData.Right)
                 otherColData.Column.Cover();
-            if (Solve())
+            if (Search())
                 return true;
             colData = solution[solution.Count - 1];
             solution.Remove(solution[solution.Count - 1]);
@@ -108,7 +108,6 @@ class DancingLinks
                 otherColData.Column.Uncover();
         }
         selectedCol.Uncover();
-        //throw new UnsolvableGridException("The grid is unsolvable!");
         return false;
     }
 

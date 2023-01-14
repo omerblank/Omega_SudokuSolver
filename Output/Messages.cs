@@ -12,7 +12,7 @@ static class Messages
     /// this function let the user choose the way he wants to give the input
     /// </summary>
     /// <returns> the given input as a string </returns>
-    public static string ChooseMode()
+    public static void ChooseMode()
     {
         string mode;
         Console.WriteLine($"Choose the way you want to give the input from the following options or type \"end\" to end: \n");
@@ -26,7 +26,7 @@ static class Messages
             Console.WriteLine();
             mode = Console.ReadLine();
         }
-        return OperateMode(mode);
+        OperateMode(mode);
     }
 
     /// <summary>
@@ -34,53 +34,52 @@ static class Messages
     /// </summary>
     /// <param name="mode"> the mode that the user chose </param>
     /// <returns> the given input as a string </returns>
-    public static string OperateMode(string mode)
+    public static void OperateMode(string mode)
     {
         switch (mode.ToLower())
         {
             case "string":
-                return StringInput();
+                StringInput();
+                break;
 
             case "text file":
-                return TextFileInput();
+                TextFileInput();
+                break;
 
             case "end":
-                {
-                    GoodbyeMessage();
-                    Environment.Exit(0);
-                    break;
-                }
+                GoodbyeMessage();
+                Environment.Exit(0);
+                break;
         }
-        return "";
     }
 
     /// <summary>
     /// this function gets a string from the user and returns it
     /// </summary>
     /// <returns> the given input as a string </returns>
-    public static string StringInput()
+    public static void StringInput()
     {
-        string stringInput;
+        string stringGrid;
         Console.WriteLine("\nEnter the string: ");
-        stringInput = Console.ReadLine();
+        stringGrid = Console.ReadLine();
         Console.WriteLine();
-        return stringInput;
+        Sudoku.Solve(new Board(stringGrid));
     }
 
     /// <summary>
     /// this function gets a text file from the user and returns it as a string
     /// </summary>
     /// <returns> the given input as a string </returns>
-    public static string TextFileInput()
+    public static void TextFileInput()
     {
-        string textFileInput;
+        string stringGrid, filePath;
         Console.WriteLine("\nEnter the text file path: ");
-        textFileInput = Console.ReadLine();
+        filePath = Console.ReadLine();
         try
         {
-            textFileInput = File.ReadAllText(textFileInput);
+            stringGrid = File.ReadAllText(filePath);
             Console.WriteLine();
-            return textFileInput;
+            File.WriteAllText(filePath, Sudoku.Solve(new Board(stringGrid)));
         }
         catch (FileNotFoundException)
         {
@@ -98,7 +97,6 @@ static class Messages
         {
             Console.WriteLine("an I/O error occurred while reading the file");
         }
-        return "";
     }
 
     /// <summary>

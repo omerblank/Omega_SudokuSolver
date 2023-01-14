@@ -1,6 +1,7 @@
 ﻿//module for running the program and showing results to the user
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -72,7 +73,8 @@ static class Sudoku
             PrintBoard(board);
             CoverBoard coverMat = new CoverBoard(board);
             DancingLinks dlxSolver = new DancingLinks(coverMat);
-            dlxSolver.Solve();
+            if(!dlxSolver.Search())
+                throw new UnsolvableGridException("The grid is unsolvable!");
             dlxSolver.DlxToGrid(board);
             //board.SolveBoard(0, 0);
             Console.WriteLine("\nAfter solving: ");
@@ -107,35 +109,31 @@ static class Sudoku
     /// <summary>
     /// this function running the sudoku solver in a loop
     /// </summary>
-    public static void SolverRunning()
+    public static void SudokuRunner()
     {
         try
         {
-            Solve(new Board(Messages.ChooseMode()));
-            Messages.MakeAChoice("c", "continue", SolverRunning);
+            Messages.ChooseMode();
+            Messages.MakeAChoice("c", "continue", SudokuRunner);
         }
         catch (InputLengthException ile)
         {
             Console.WriteLine(ile.Message);
-            Messages.MakeAChoice("c", "continue", SolverRunning);
+            Messages.MakeAChoice("c", "continue", SudokuRunner);
         }
         catch (ArgumentException ae)
         {
             Console.WriteLine(ae.Message);
-            Messages.MakeAChoice("c", "continue", SolverRunning);
+            Messages.MakeAChoice("c", "continue", SudokuRunner);
         }
         catch(DuplicateElementsException dee)
         {
             Console.WriteLine(dee.Message);
-            Messages.MakeAChoice("c", "continue", SolverRunning);
+            Messages.MakeAChoice("c", "continue", SudokuRunner);
         }
         //catch(UnsolvableGridException uge)
         //{
         //    Console.WriteLine(uge.Message);
-        //    Messages.MakeAChoice("c", "continue", SolverRunning);
-        //}
-        //finally
-        //{
         //    Messages.MakeAChoice("c", "continue", SolverRunning);
         //}
     }
@@ -146,7 +144,7 @@ static class Sudoku
     public static void SudokuMain()
     {
         Messages.WelcomeMessasge();
-        SolverRunning();
+        SudokuRunner();
         Messages.GoodbyeMessage();
     }
 }

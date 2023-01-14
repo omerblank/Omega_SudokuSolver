@@ -49,7 +49,7 @@ static class InputValidations
         foreach (char element in input)
         {
             if (!validValues.Contains(element - '0'))
-                throw new ArgumentException(element + " is not a valid value in Omega Sudoku Board!");
+                throw new ArgumentException(element + $" is not a valid value in {Math.Sqrt(input.Length)}X{Math.Sqrt(input.Length)} Omega Sudoku Board!");
         }
     }
     /// <summary>
@@ -67,11 +67,11 @@ static class InputValidations
             // check if all the elements in the input are valid
             ValidateElementsValues(input);
         }
-        catch(InputLengthException ile)
+        catch(InputLengthException)
         {
             throw;
         }
-        catch(ArgumentException ae)
+        catch(ArgumentException)
         {
             throw;
         }
