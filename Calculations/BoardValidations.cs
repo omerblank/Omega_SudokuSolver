@@ -29,7 +29,7 @@ static class BoardValidations
                     for (int k = 0; k < board.Side; k++)
                     {
                         if (k != col && board.Cells[row, k].Value == rowElement)
-                            throw new DuplicateElementsException($"An element can't appear more than once in a row!\n(element: {rowElement} in row: {row})");
+                            throw new DuplicateElementsException($"An element can't appear more than once in a row!\n(element: {(char)(rowElement + '0')} in row: {row})");
                     }
                 }
             }
@@ -54,7 +54,7 @@ static class BoardValidations
                     for (int k = 0; k < board.Side; k++)
                     {
                         if (k != row && board.Cells[k, col].Value == colElement)
-                            throw new DuplicateElementsException($"An element can't appear more than once in a column!\n(element: {colElement} in column: {col})");
+                            throw new DuplicateElementsException($"An element can't appear more than once in a column!\n(element: {(char)(colElement + '0')} in column: {col})");
                     }
                 }
             }
@@ -72,7 +72,7 @@ static class BoardValidations
         int blockElement;
         for (int block = 0; block < board.Side; block++)
         {
-            blockIndex.Row = block / (int)Math.Sqrt(board.Side);
+            blockIndex.Row = block / (int)Math.Sqrt(board.Side) * (int)Math.Sqrt(board.Side);
             blockIndex.Col = block % (int)Math.Sqrt(board.Side) * (int)Math.Sqrt(board.Side);
             for (int row = blockIndex.Row; row < blockIndex.Row + Math.Sqrt(board.Side); row++)
             {
@@ -88,7 +88,7 @@ static class BoardValidations
                                 if (!(blockRow == row && blockCol == col))
                                 {
                                     if (board.Cells[blockRow, blockCol].Value == blockElement)
-                                        throw new DuplicateElementsException($"An element can't appear more than once in a block!\n(element: {blockElement} in block: {block})");
+                                        throw new DuplicateElementsException($"An element can't appear more than once in a block!\n(element {(char)(blockElement + '0')} in block {block})");
                                 }
                             }
                         }

@@ -108,6 +108,7 @@ class DancingLinks
                 otherColData.Column.Uncover();
         }
         selectedCol.Uncover();
+        //throw new UnsolvableGridException("The grid is unsolvable!");
         return false;
     }
 

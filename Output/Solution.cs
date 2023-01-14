@@ -12,6 +12,7 @@ static class Solution
     /// </summary>
     public static void PrintBoard(Board board)
     {
+        Console.WriteLine();
         for (int i = 0; i < board.Side; i++)
         {
             for (int j = 0; j < board.Side; j++)
@@ -36,6 +37,7 @@ static class Solution
                     Console.WriteLine();
             }
         }
+        Console.WriteLine();
     }
 
     /// <summary>
@@ -48,7 +50,7 @@ static class Solution
         string boardElements = "";
         foreach (Cell cell in board.Cells)
         {
-            boardElements += (char)cell.Value + '0';
+            boardElements += (char)(cell.Value + '0');
         }
         return boardElements;
     }
@@ -160,6 +162,11 @@ static class Solution
             Console.WriteLine(dee.Message);
             Messages.MakeAChoice("c", "continue", SolverRunning);
         }
+        //catch(UnsolvableGridException uge)
+        //{
+        //    Console.WriteLine(uge.Message);
+        //    Messages.MakeAChoice("c", "continue", SolverRunning);
+        //}
         //finally
         //{
         //    Messages.MakeAChoice("c", "continue", SolverRunning);
