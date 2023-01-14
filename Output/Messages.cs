@@ -132,7 +132,7 @@ static class Messages
             $"Two elements with the same value will not appear in the same row, column or box.\n" +
             $"Here is an example for a 9X9 sudoku grid as a string >>>\n{Constants.STRING_GRID_EXAMPLE}\n\n" +
             $"The grid will look like this:\n");
-        Solution.PrintBoard(new Board(Constants.STRING_GRID_EXAMPLE));
+        Sudoku.PrintBoard(new Board(Constants.STRING_GRID_EXAMPLE));
     }
 
     //this function prints a welcome message

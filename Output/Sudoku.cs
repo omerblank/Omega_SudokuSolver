@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-static class Solution
+static class Sudoku
 {
     /// <summary>
     /// this function prints the board
