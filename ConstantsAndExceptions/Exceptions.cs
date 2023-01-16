@@ -4,7 +4,7 @@ using System;
 /// <summary>
 /// exception for invalid input length
 /// </summary>
-class InputLengthException : Exception
+public class InputLengthException : Exception
 {
     public InputLengthException(string message)
         : base(message) { }
@@ -13,7 +13,7 @@ class InputLengthException : Exception
 /// <summary>
 /// exception for invalid duplicates in the grid
 /// </summary>
-class DuplicateElementsException : Exception
+public class DuplicateElementsException : Exception
 {
     public DuplicateElementsException(string message)
         : base(message) { }
@@ -22,7 +22,7 @@ class DuplicateElementsException : Exception
 /// <summary>
 /// exception for unsolvable grids
 /// </summary>
-class UnsolvableGridException : Exception
+public class UnsolvableGridException : Exception
 {
     public UnsolvableGridException(string message)
         : base(message) { }
@@ -31,7 +31,7 @@ class UnsolvableGridException : Exception
 /// <summary>
 /// exception for files that are not supported in the system (not txt)
 /// </summary>
-class FileNotSupportedException : Exception
+public class FileNotSupportedException : Exception
 {
     public FileNotSupportedException(string message)
         : base(message) { }
