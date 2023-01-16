@@ -4,9 +4,9 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 
-OmegaSudokuSolver.csproj
-OmegaSudokuSolver.sln
-.gitattributes
+*OmegaSudokuSolver.csproj
+*OmegaSudokuSolver.sln
+*.gitattributes
 # User-specific files
 *.rsuser
 *.suo
