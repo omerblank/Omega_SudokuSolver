@@ -24,6 +24,7 @@ class CoverBoard
     {
         for (int row = 0; row < coverMat.GetLength(0); row++)
         {
+            //running on the first N^2 columns in the matrix
             for (int col = 0; col < Math.Pow(side, 2); col++)
             {
                 if (row / side == col)
@@ -43,6 +44,7 @@ class CoverBoard
     {
         for (int row = 0; row < coverMat.GetLength(0); row++)
         {
+            //running on the second N^2 columns in the matrix
             for (int col = (int)Math.Pow(side, 2); col < 2 * (int)Math.Pow(side, 2); col++)
             {
                 if (row % (int)Math.Pow(side, 2) == col % (int)Math.Pow(side, 2))
@@ -62,6 +64,7 @@ class CoverBoard
     {
         for (int row = 0; row < coverMat.GetLength(0); row++)
         {
+            //running on the third N^2 columns in the matrix
             for (int col = (int)(2 * Math.Pow(side, 2)); col < 3 * Math.Pow(side, 2); col++)
             {
                 int x = row % side + (row / (int)Math.Pow(side, 2)) * side;
@@ -82,6 +85,7 @@ class CoverBoard
     {
         Location boxIndex;
         int boxNumber, cellRow, cellCol;
+
         for (int row = 0; row < coverMat.GetLength(0); row++)
         {
             for (int col = (int)(3 * Math.Pow(side, 2)); col < 4 * Math.Pow(side, 2); col++)
@@ -112,6 +116,7 @@ class CoverBoard
             {
                 for (int value = board.MinValue; value <= board.MaxValue; value++)
                 {
+                    //if there is a cell with value in the grid, turning OFF (put 0) in the right row in the cover matrix
                     if (board.Cells[row, col].Value != value && board.Cells[row, col].Value != 0)
                     {
                         coverMatRow = row * (int)Math.Pow(board.Side, 2) + col * board.Side + (value - 1);

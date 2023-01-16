@@ -67,18 +67,18 @@ static class Sudoku
     {
         try
         {
-            var watch = new System.Diagnostics.Stopwatch();
-            watch.Start();
             Console.WriteLine("Before solving: ");
             PrintBoard(board);
+            var watch = new System.Diagnostics.Stopwatch();
+            watch.Start();
             CoverBoard coverMat = new CoverBoard(board);
             DancingLinks dlxSolver = new DancingLinks(coverMat);
             if (!dlxSolver.Search())
                 throw new UnsolvableGridException("The grid is unsolvable!");
             dlxSolver.DlxToGrid(board);
+            watch.Stop();
             Console.WriteLine("\nAfter solving: ");
             PrintBoard(board);
-            watch.Stop();
             Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
             return BoardToString(board);
         }
@@ -90,19 +90,6 @@ static class Sudoku
         {
             throw;
         }
-        //board.FindOptions();
-
-        //-----------------------------------------------------
-        //for (int i = 0; i < 4 * 4 * 4; i++)
-        //{
-        //    for (int j = 0; j < 4 * 4 * 4; j++)
-        //    {
-        //        Console.Write(coverMat.CoverMat[i, j]);
-        //    }
-        //    Console.WriteLine();
-        //}
-        //-----------------------------------------------------
-
     }
 
     /// <summary>
@@ -135,11 +122,11 @@ static class Sudoku
             Console.WriteLine(uge.Message);
             Messages.MakeAChoice("c", "continue", SudokuRunner);
         }
-        //catch(UnsolvableGridException uge)
-        //{
-        //    Console.WriteLine(uge.Message);
-        //    Messages.MakeAChoice("c", "continue", SolverRunning);
-        //}
+        catch (FileNotSupportedException fnse)
+        {
+            Console.WriteLine(fnse);
+            Messages.MakeAChoice("c", "continue", SudokuRunner);
+        }
     }
 
     /// <summary>

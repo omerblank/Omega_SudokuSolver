@@ -27,3 +27,12 @@ class UnsolvableGridException : Exception
     public UnsolvableGridException(string message)
         : base(message) { }
 }
+
+/// <summary>
+/// exception for files that are not supported in the system (not txt)
+/// </summary>
+class FileNotSupportedException : Exception
+{
+    public FileNotSupportedException(string message)
+        : base(message) { }
+}

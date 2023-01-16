@@ -90,6 +90,7 @@ class DancingLinks
     /// <returns> true if the grid solved successfully, if not, returns false </returns>
     public bool Search()
     {
+        // if there are no column nodes 
         if (header.Right == header)
             return true;
         ColumnNode selectedCol = SelectMinColumnNode();
@@ -101,12 +102,14 @@ class DancingLinks
                 otherColData.Column.Cover();
             if (Search())
                 return true;
-            colData = solution[solution.Count - 1];
-            solution.Remove(solution[solution.Count - 1]);
+            colData = solution.Last();
+            solution.Remove(solution.Last());
             selectedCol = colData.Column;
             for (DataNode otherColData = colData.Left; otherColData != colData; otherColData = otherColData.Left)
                 otherColData.Column.Uncover();
         }
+
+        // the grid is unsolvable
         selectedCol.Uncover();
         return false;
     }
@@ -117,31 +120,34 @@ class DancingLinks
     /// <param name="board"> the grid </param>
     public void DlxToGrid(Board board)
     {
+        int minColName, currColName, nextColName, gridRow, gridCol, cellValue;
         foreach (DataNode node in solution)
         {
             DataNode rcNode = node;
-            int min = int.Parse(rcNode.Column.Name);
+            minColName = int.Parse(rcNode.Column.Name);
 
             for (DataNode tmp = node.Right; tmp != node; tmp = tmp.Right)
             {
-                int val = int.Parse(tmp.Column.Name);
+                currColName = int.Parse(tmp.Column.Name);
 
-                if (val < min)
+                if (currColName < minColName)
                 {
-                    min = val;
+                    minColName = currColName;
                     rcNode = tmp;
                 }
             }
 
-            // we get line and column
-            int ans1 = int.Parse(rcNode.Column.Name);
-            int ans2 = int.Parse(rcNode.Right.Column.Name);
-            int r = ans1 / board.Side;
-            int c = ans1 % board.Side;
-            // and the affected value
-            int num = (ans2 % board.Side) + 1;
-            // we affect that on the result grid
-            board.Cells[r, c].Value = num;
+            // getting the row and the column of the found cell
+            minColName = int.Parse(rcNode.Column.Name);
+            nextColName = int.Parse(rcNode.Right.Column.Name);
+            gridRow = minColName / board.Side;
+            gridCol = minColName % board.Side;
+
+            // getting the value of the found cell
+            cellValue = (nextColName % board.Side) + 1;
+
+            // placing the value in the right place in the grid
+            board.Cells[gridRow, gridCol].Value = cellValue;
         }
     }
 

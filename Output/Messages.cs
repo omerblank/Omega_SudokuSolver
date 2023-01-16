@@ -79,6 +79,8 @@ static class Messages
         string stringGrid, filePath;
         Console.WriteLine("\nEnter the text file path: ");
         filePath = Console.ReadLine();
+        if (!filePath.EndsWith("txt"))
+            throw new FileNotSupportedException("The system supports only text files!");
         try
         {
             stringGrid = File.ReadAllText(filePath);
