@@ -17,5 +17,9 @@ the algorithm is built to solve exact cover problems.
 dlx uses sparse matrix and algorithm x to solve the exact cover problem.
 here you can check some info about algorithm x and exact cover problem: https://www.geeksforgeeks.org/introduction-to-exact-cover-problem-and-algorithm-x/
 
+## Things I know i need to improve
+1. when creating cover matrix, in the constraints functions, it would be a lot better if i was running on the dimensions of the source grid and not on the dimensions of the cover matrix.
+2. gitignore file is not good because i pushed the unnecesary files in the beggining, i've learned from it and did it right in the Tests Repository.
+3. git work was not perfect at all, a lot of unnecesary commits and pushes, struggling with merging.
 
 Ω ENJOY! Ω
