@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+
+*OmegaSudokuSolver.csproj
+*OmegaSudokuSolver.sln
+*.gitattributes
 # User-specific files
 *.rsuser
 *.suo
@@ -93,11 +97,13 @@ StyleCopReport.xml
 *.log
 *.vspscc
 *.vssscc
-.builds
+*.builds
 *.pidb
 *.svclog
 *.scc
-
+*.sln
+*.csproj
+*.gitattributes
 # Chutzpah Test files
 _Chutzpah*
 
