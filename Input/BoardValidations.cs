@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// class for validations on the board
 /// </summary>
-static class BoardValidations
+public class BoardValidations
 {
     /// <summary>
     /// this function check for duplicated elements in a row

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// class for representing an element in the grid (Cell)
 /// </summary>
-class Cell
+public class Cell
 {
     private Location index;
     private Location blockIndex;

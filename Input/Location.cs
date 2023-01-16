@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// class for representing the index of an element in two dimensions
 /// </summary>
-class Location
+public class Location
 {
     private int row;
     private int col;

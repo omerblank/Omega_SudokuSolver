@@ -1,9 +1,12 @@
 ﻿//the main module
-class SudokuSolver
+namespace OmegaSudokuSolver
 {
-    static public void Main(String[] args)
+    class SudokuSolver
     {
-        Sudoku.SudokuMain();
-    } 
+        static public void Main(String[] args)
+        {
+            Sudoku.SudokuMain();
+        }
+    }
 }
 

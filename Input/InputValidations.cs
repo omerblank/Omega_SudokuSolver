@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-static class InputValidations
+public class InputValidations
 {
 
     /// <summary>

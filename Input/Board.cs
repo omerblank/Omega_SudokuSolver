@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// class for representing the grid
 /// </summary>
-class Board
+public class Board
 {
     private Cell[,] cells;
     private int side;
