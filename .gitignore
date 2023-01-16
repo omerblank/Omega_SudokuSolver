@@ -362,6 +362,6 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# .gitattributes
-# OmegaSudokuSolver.csproj
-# OmegaSudokuSolver.sln
+*.gitattributes
+*OmegaSudokuSolver.csproj
+*OmegaSudokuSolver.sln
